@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Brain } from "lucide-react";
+import { Brain, Mail } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 
 export function SiteFooter() {
@@ -23,6 +23,13 @@ export function SiteFooter() {
               pattern recognition, problem solving and cognitive skills. Built
               for learning and entertainment, not clinical assessment.
             </p>
+            <a
+              href={`mailto:${siteConfig.contactEmail}`}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+              {siteConfig.contactEmail}
+            </a>
           </div>
 
           <div className="space-y-3 md:justify-self-center">

@@ -9,6 +9,7 @@ export const siteConfig = {
   ogImage: "https://einsteiniqtest.com/og-image.svg",
   twitter: "@einsteiniqtest",
   author: "Einstein IQ Test Team",
+  contactEmail: "hello@einsteiniqtest.com",
   nav: [
     { label: "Home", href: "/" },
     { label: "About Us", href: "/about" },

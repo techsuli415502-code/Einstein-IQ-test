@@ -96,7 +96,9 @@ export function ContactForm() {
           <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
             Your submission has been received on the front end. Please connect
             this form to your preferred email service before using it in
-            production so messages are actually delivered to an inbox.
+            production so messages are actually delivered to an inbox. For a
+            guaranteed reply in the meantime, email us directly at the address
+            shown on the Contact page.
           </p>
           <div className="mt-6">
             <Button onClick={handleReset}>Send another message</Button>
@@ -228,8 +230,8 @@ export function ContactForm() {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted-foreground">
-            This is a front end demo form. No data is sent to a server in
-            this build.
+            This form is a front end demo in the current build. For a guaranteed
+            reply, use the direct email shown below.
           </p>
           <Button
             type="submit"
