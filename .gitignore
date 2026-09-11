@@ -55,6 +55,7 @@ server.log
 /scripts
 /skills
 /agent-ctx
+/mini-services
 Caddyfile
 bun.lock
 .agent
