@@ -1,0 +1,17 @@
+{
+  "name": "Einstein IQ Test",
+  "short_name": "Einstein IQ",
+  "description": "Free online IQ test and reasoning quiz covering logical reasoning, pattern recognition and problem solving.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAF7",
+  "theme_color": "#0F766E",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
