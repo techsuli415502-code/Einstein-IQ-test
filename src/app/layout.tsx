@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { LeaderboardAd } from "@/components/adsterra-ad";
 import { AnchorAd } from "@/components/anchor-ad";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { siteConfig } from "@/lib/site-config";
 
 const geistSans = Geist({
@@ -131,6 +132,7 @@ export default function RootLayout({
         {/* Sticky bottom anchor ad. Fixed to viewport, dismissible per session. */}
         <AnchorAd />
         <Toaster />
+        <GoogleAnalytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}

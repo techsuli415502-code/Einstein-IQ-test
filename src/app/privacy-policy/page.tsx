@@ -61,9 +61,9 @@ const sections = [
     icon: Cookie,
     title: "Cookies",
     body: [
-      "The website itself does not set first party cookies to track you across sessions. However, our third party ad network uses cookies and similar technologies to display relevant ads, count impressions, and measure ad performance.",
-      "You can review, block, or delete cookies through your browser settings. Disabling cookies will not prevent the quiz from working, since the quiz relies on in page state rather than cookies, but it may reduce the relevance of the ads you see and may affect how the ad network counts impressions.",
-      "Most ad networks also offer an opt out page where you can manage your ad tracking preferences. See the Your Choices section below for links.",
+      "The website itself does not set first party cookies for its own tracking. However, our third party services do set cookies: the ad network uses cookies to display relevant ads, count impressions, and measure ad performance, and Google Analytics sets cookies (including _ga, _ga_<measurement_id>, and _gid) to distinguish visitors and measure session activity.",
+      "You can review, block, or delete cookies through your browser settings. Disabling cookies will not prevent the quiz from working, since the quiz relies on in page state rather than cookies, but it may reduce the relevance of the ads you see, may affect how the ad network counts impressions, and may prevent Google Analytics from recording your visit.",
+      "Most ad networks and Google itself offer opt out pages where you can manage your tracking preferences. See the Your Choices section below for links.",
     ],
   },
   {
@@ -71,8 +71,9 @@ const sections = [
     icon: BarChart3,
     title: "Analytics",
     body: [
-      "If first party analytics is enabled on this site in the future, it may collect aggregate and anonymized information such as the pages visited, the type of device used, and general region. The goal is to understand which content is useful so we can improve it.",
-      "We do not use first party analytics to identify individual users, and we do not connect first party analytics data to quiz answers or to information submitted through the contact form.",
+      "Einstein IQ Test uses Google Analytics 4 to understand which pages are visited, how visitors find the site, the type of device and browser used, the approximate region, and how long visitors spend on each page. Google Analytics collects this information through cookies and similar technologies.",
+      "We use this information to understand which content is useful and to improve the site over time. We do not use Google Analytics to identify individual users, and we do not connect Google Analytics data to your quiz answers or to information you submit through the contact form.",
+      "Google Analytics sets first party cookies on this domain (including _ga, _ga_<measurement_id>, and _gid). These cookies typically persist between 1 day and 2 years depending on the cookie. You can block these cookies through your browser settings or through the Google Analytics opt-out browser add-on available at tools.google.com/dlpage/gaoptout.",
     ],
   },
   {
@@ -80,9 +81,9 @@ const sections = [
     icon: ExternalLink,
     title: "Third Party Services",
     body: [
-      "Einstein IQ Test uses a third party ad network to display banner and anchor ads on every page. The ad network serves ads through its own domain (highrevenueformat.com) and may load additional scripts, cookies, and pixels through its partners in order to serve, target, and measure ads.",
-      "If the site uses a hosting provider or a content delivery network, those providers may process basic technical information such as IP address in order to serve the page.",
-      "We do not embed social media widgets other than what the ad network may include as part of its ad units. The ad network is the only third party service actively involved in serving the website today.",
+      "Einstein IQ Test uses two main third party services: an ad network (serving ads through highrevenueformat.com) to display banner and anchor ads on every page, and Google Analytics 4 (serving scripts through googletagmanager.com and gtag) to measure site usage. Both services may set cookies and similar technologies through your browser.",
+      "If the site uses a hosting provider or a content delivery network, those providers may process basic technical information such as IP address in order to serve the page. For our deployment, Vercel acts as the hosting provider.",
+      "We do not embed social media widgets other than what the ad network may include as part of its ad units. The ad network and Google Analytics are the only third party services actively involved in serving the website today.",
     ],
   },
   {
@@ -131,8 +132,9 @@ const sections = [
     title: "Your Choices",
     body: [
       "You can take the quiz without sharing any personal information with us. You can clear your quiz answers at any time by pressing the Clear button on a question, by pressing Try Again on the result screen, or by closing the tab.",
-      "You can control cookies through your browser settings. Most browsers allow you to refuse new cookies, delete existing cookies, or be notified before a cookie is set. These settings will not affect the quiz itself, but they may affect how ads are served.",
+      "You can control cookies through your browser settings. Most browsers allow you to refuse new cookies, delete existing cookies, or be notified before a cookie is set. These settings will not affect the quiz itself, but they may affect how ads are served and whether Google Analytics can record your visit.",
       "To opt out of interest based advertising from many ad networks at once, you can visit the Digital Advertising Alliance consumer choice page at aboutads.info/choices or youradschoices.com (for users in the USA), or the equivalent consumer choice page in your region. For browser based opt outs, you can also use the Global Privacy Control signal where supported.",
+      "To opt out of Google Analytics tracking specifically, you can install the Google Analytics opt-out browser add-on from tools.google.com/dlpage/gaoptout. This add-on tells Google's scripts not to send data to Google Analytics for any site you visit.",
       "You can dismiss the sticky bottom anchor ad on any page by clicking the close button. The dismissal is remembered for the current browser session so the anchor does not reappear while you browse.",
     ],
   },
