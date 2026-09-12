@@ -4,6 +4,8 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { LeaderboardAd } from "@/components/adsterra-ad";
+import { AnchorAd } from "@/components/anchor-ad";
 import { siteConfig } from "@/lib/site-config";
 
 const geistSans = Geist({
@@ -120,8 +122,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <SiteHeader />
+        {/* Top leaderboard ad (desktop only). Sits between header and main content. */}
+        <div className="border-b border-border/60 bg-secondary/30 py-3">
+          <LeaderboardAd />
+        </div>
         <main className="flex-1">{children}</main>
         <SiteFooter />
+        {/* Sticky bottom anchor ad. Fixed to viewport, dismissible per session. */}
+        <AnchorAd />
         <Toaster />
         <script
           type="application/ld+json"

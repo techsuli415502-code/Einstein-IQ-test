@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Shield, Lock, Cookie, BarChart3, ExternalLink } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
+import { RectangleAd } from "@/components/adsterra-ad";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -31,8 +32,9 @@ const sections = [
     icon: Shield,
     title: "Information We Collect",
     body: [
-      "Einstein IQ Test is designed to be minimal when it comes to data. The quiz runs entirely in your browser. Your answers are stored only in the page state while you take the quiz, and they are cleared when you press Try Again or close the tab.",
+      "Einstein IQ Test is designed to be minimal when it comes to data we collect ourselves. The quiz runs entirely in your browser. Your answers are stored only in the page state while you take the quiz, and they are cleared when you press Try Again or close the tab.",
       "We do not ask you to create an account, and we do not require an email address to take the quiz or see your score. The contact form on the Contact Us page asks for a name, email, and message, but in this build that information is only handled on the front end and is not transmitted to a server.",
+      "The website displays ads through a third party ad network. Those ads may set or read cookies, device identifiers, and similar identifiers in your browser, and may collect general information such as IP address, browser type, screen size, and pages viewed, in order to serve and measure advertising. See the Advertising and Third Party Services sections below for more detail.",
     ],
   },
   {
@@ -42,6 +44,7 @@ const sections = [
     body: [
       "Any information that does reach us is used only to operate and improve the website. We do not sell or rent personal information to third parties. We do not use quiz answers to build profiles about individual users.",
       "If you submit a message through the contact form once it is connected to an email service, the information you provide will be used to respond to your inquiry and nothing else.",
+      "The third party ad network we use may collect information as described in their own privacy policy. That information is governed by the ad network and its partners, not by us, and we do not control how they use it.",
     ],
   },
   {
@@ -49,7 +52,7 @@ const sections = [
     icon: Lock,
     title: "Quiz Data",
     body: [
-      "Your quiz answers, your score, and the review of correct and incorrect answers all stay in your browser session. They are not sent to a server, stored in a database, or shared with third parties.",
+      "Your quiz answers, your score, and the review of correct and incorrect answers all stay in your browser session. They are not sent to a server, stored in a database, or shared with third parties, including the ad network.",
       "When you press Try Again, the quiz state is reset, all selected answers are cleared, and the score is recalculated fresh from your new responses. Refreshing the page or closing the tab also clears all quiz data.",
     ],
   },
@@ -58,8 +61,9 @@ const sections = [
     icon: Cookie,
     title: "Cookies",
     body: [
-      "The website itself does not set cookies to track you across sessions. Any cookies you may notice come from your browser or from optional third party tools such as analytics, described below, if and when those are enabled.",
-      "You can review, block, or delete cookies through your browser settings. Disabling cookies will not prevent the quiz from working, since the quiz relies on in page state rather than cookies.",
+      "The website itself does not set first party cookies to track you across sessions. However, our third party ad network uses cookies and similar technologies to display relevant ads, count impressions, and measure ad performance.",
+      "You can review, block, or delete cookies through your browser settings. Disabling cookies will not prevent the quiz from working, since the quiz relies on in page state rather than cookies, but it may reduce the relevance of the ads you see and may affect how the ad network counts impressions.",
+      "Most ad networks also offer an opt out page where you can manage your ad tracking preferences. See the Your Choices section below for links.",
     ],
   },
   {
@@ -67,8 +71,8 @@ const sections = [
     icon: BarChart3,
     title: "Analytics",
     body: [
-      "If analytics is enabled on this site in the future, it may collect aggregate and anonymized information such as the pages visited, the type of device used, and general region. The goal is to understand which content is useful so we can improve it.",
-      "We do not use analytics to identify individual users, and we do not connect analytics data to quiz answers or to information submitted through the contact form.",
+      "If first party analytics is enabled on this site in the future, it may collect aggregate and anonymized information such as the pages visited, the type of device used, and general region. The goal is to understand which content is useful so we can improve it.",
+      "We do not use first party analytics to identify individual users, and we do not connect first party analytics data to quiz answers or to information submitted through the contact form.",
     ],
   },
   {
@@ -76,8 +80,9 @@ const sections = [
     icon: ExternalLink,
     title: "Third Party Services",
     body: [
-      "Einstein IQ Test is a static website and does not rely on third party services for the quiz to work. If the site uses a hosting provider or a content delivery network, those providers may process basic technical information such as IP address in order to serve the page.",
-      "We do not embed social media widgets, advertising networks, or hidden tracking pixels. If this changes in the future, this policy will be updated to reflect what is in use.",
+      "Einstein IQ Test uses a third party ad network to display banner and anchor ads on every page. The ad network serves ads through its own domain (highrevenueformat.com) and may load additional scripts, cookies, and pixels through its partners in order to serve, target, and measure ads.",
+      "If the site uses a hosting provider or a content delivery network, those providers may process basic technical information such as IP address in order to serve the page.",
+      "We do not embed social media widgets other than what the ad network may include as part of its ad units. The ad network is the only third party service actively involved in serving the website today.",
     ],
   },
   {
@@ -85,8 +90,10 @@ const sections = [
     icon: BarChart3,
     title: "Advertising",
     body: [
-      "The current build of Einstein IQ Test does not display advertising. We do not run ad networks and we do not share data with advertising partners.",
-      "If advertising is introduced in the future, we will update this section to explain which networks are used, what information they collect, and how you can opt out.",
+      "Einstein IQ Test displays advertising through a third party ad network. Banner ads (300 by 250 and 728 by 90 pixels) appear in content areas on most pages, and a sticky anchor ad appears at the bottom of the viewport and can be dismissed for the current session.",
+      "The ad network decides which ads to show based on its own criteria, which may include your approximate region, browsing history collected by them, the time of day, and the content of the page you are viewing. We do not choose specific ads and we do not see which ads were shown to you personally.",
+      "If you find an ad misleading, offensive, or harmful, please contact the ad network through their own complaint process and also let us know through our Contact Us page so we can raise the issue with the network. We are not responsible for the content of third party ads.",
+      "To opt out of interest based advertising from many ad networks at once, you can visit aboutads.info/choices or youradschoices.com (for the USA) or the equivalent consumer choice page in your region.",
     ],
   },
   {
@@ -94,7 +101,8 @@ const sections = [
     icon: Lock,
     title: "Data Security",
     body: [
-      "Because quiz answers are kept in your browser and are not transmitted to a server in this build, the risk of a server side data breach affecting your quiz answers is effectively zero.",
+      "Quiz answers are kept in your browser and are not transmitted to a server in this build, so the risk of a server side data breach affecting your quiz answers is effectively zero.",
+      "Information collected by the ad network is handled by them, subject to their own security practices. We encourage you to review the ad network privacy policy if you want to understand how they protect information.",
       "If the contact form is later connected to an email service, we will take reasonable steps to protect submitted messages in transit. No method of transmission or storage is fully secure, however, and you should keep that in mind when sharing personal details.",
     ],
   },
@@ -104,6 +112,7 @@ const sections = [
     title: "Children's Privacy",
     body: [
       "The Einstein IQ Test quiz is suitable for general audiences, including older children who are interested in reasoning practice. We do not knowingly collect personal information from children.",
+      "However, third party ad networks may serve ads that are not specifically designed for children, and may collect information described in their own policies. If you are a parent or guardian and you want a child to take the quiz without seeing third party ads, consider using an ad blocker on that device.",
       "If you are a parent or guardian and you believe your child has provided personal information through the contact form, please reach out and we will take steps to delete that information from any system it may have reached.",
     ],
   },
@@ -121,8 +130,10 @@ const sections = [
     icon: Shield,
     title: "Your Choices",
     body: [
-      "You can take the quiz without sharing any personal information. You can clear your quiz answers at any time by pressing the Clear button on a question, by pressing Try Again on the result screen, or by closing the tab.",
-      "You can also control cookies through your browser settings. Most browsers allow you to refuse new cookies, delete existing cookies, or be notified before a cookie is set. These settings will not affect the quiz itself.",
+      "You can take the quiz without sharing any personal information with us. You can clear your quiz answers at any time by pressing the Clear button on a question, by pressing Try Again on the result screen, or by closing the tab.",
+      "You can control cookies through your browser settings. Most browsers allow you to refuse new cookies, delete existing cookies, or be notified before a cookie is set. These settings will not affect the quiz itself, but they may affect how ads are served.",
+      "To opt out of interest based advertising from many ad networks at once, you can visit the Digital Advertising Alliance consumer choice page at aboutads.info/choices or youradschoices.com (for users in the USA), or the equivalent consumer choice page in your region. For browser based opt outs, you can also use the Global Privacy Control signal where supported.",
+      "You can dismiss the sticky bottom anchor ad on any page by clicking the close button. The dismissal is remembered for the current browser session so the anchor does not reappear while you browse.",
     ],
   },
   {
@@ -170,6 +181,11 @@ export default function PrivacyPolicyPage() {
           </p>
         </div>
       </section>
+
+      {/* In-content ad. */}
+      <div className="py-6">
+        <RectangleAd />
+      </div>
 
       <section className="py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">

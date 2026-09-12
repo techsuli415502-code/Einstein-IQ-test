@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Mail, MessageSquare, Clock, ArrowRight } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 import { ContactForm } from "@/components/contact-form";
+import { RectangleAd } from "@/components/adsterra-ad";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -71,6 +72,11 @@ export default function ContactPage() {
           </p>
         </div>
       </section>
+
+      {/* In-content ad. */}
+      <div className="py-6">
+        <RectangleAd />
+      </div>
 
       <section className="py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">

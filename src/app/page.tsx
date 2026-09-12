@@ -18,6 +18,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { RectangleAd, LeaderboardAd } from "@/components/adsterra-ad";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -218,6 +219,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* In-content ad: between quiz and educational content. */}
+      <div className="py-6">
+        <RectangleAd />
+      </div>
+
       {/* What is an IQ test */}
       <section className="border-t border-border/60 bg-secondary/30 py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -316,6 +322,11 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* In-content ad: between content blocks. */}
+      <div className="py-6">
+        <RectangleAd />
+      </div>
+
       {/* What does an IQ test measure */}
       <section className="py-14 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -352,6 +363,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* In-content leaderboard: between content blocks. */}
+      <div className="py-6">
+        <LeaderboardAd />
+      </div>
 
       {/* Why try an IQ test + Tips */}
       <section className="border-t border-border/60 bg-secondary/30 py-14 sm:py-20">
@@ -491,6 +507,11 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      {/* Final in-content ad: after FAQ. */}
+      <div className="py-6">
+        <RectangleAd />
+      </div>
     </>
   );
 }

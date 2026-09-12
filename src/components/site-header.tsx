@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, Brain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const isActive = (href: string) => {
@@ -32,7 +33,7 @@ export function SiteHeader() {
         .getElementById("iq-quiz")
         ?.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
-      window.location.href = "/#iq-quiz";
+      router.push("/#iq-quiz");
     }
   };
 

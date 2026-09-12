@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Brain, ShieldCheck, Target, RefreshCw, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RectangleAd } from "@/components/adsterra-ad";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -125,6 +126,11 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* In-content ad. */}
+      <div className="py-6">
+        <RectangleAd />
+      </div>
+
       <section className="border-t border-border/60 bg-secondary/30 py-14 sm:py-20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <h2 className="text-3xl font-bold tracking-tight text-foreground">
@@ -201,6 +207,11 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* In-content ad. */}
+      <div className="py-6">
+        <RectangleAd />
+      </div>
 
       <section className="border-t border-border/60 bg-secondary/30 py-14 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">

@@ -94,6 +94,22 @@
   }
 }
 
+/* Reserve bottom space for the sticky anchor ad. The anchor is
+   roughly 90px on desktop and 250px on mobile, plus a small badge
+   and padding. We reserve 110px on desktop and 290px on mobile to
+   be safe. Even when the anchor is dismissed, the padding remains
+   as a small bottom margin which is visually fine. */
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 110px;
+  }
+}
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 290px;
+  }
+}
+
 /* Subtle gradient utility for hero sections */
 .bg-hero-gradient {
   background-image:
