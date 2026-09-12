@@ -63,3 +63,4 @@ bun.lock
 .cursor
 .devcontainer
 .env*
+tool-results/
