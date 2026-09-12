@@ -1,15 +1,28 @@
-import Script from "next/script";
+/* eslint-disable @next/next/next-script-for-ga */
+// We intentionally use raw <script> tags instead of the @next/third-parties
+// GoogleAnalytics component because Google Search Console site verification
+// requires the GA snippet to be in the <head>. The official
+// @next/third-parties/google GoogleAnalytics component uses afterInteractive
+// strategy which places the script in the <body>, which fails verification.
 
 /**
  * Google Analytics (gtag.js) integration.
  *
- * Uses Next.js Script component with strategy="afterInteractive" so
- * the gtag.js library loads after the page is interactive (does not
- * block First Contentful Paint). The inline init script configures
- * the GA4 measurement ID and pushes the initial page_view event.
+ * This component renders inline <script> tags directly inside the
+ * document <head> (via the layout's <head> element in layout.tsx).
+ * Placing the snippet in <head> is required by Google Search
+ * Console for site ownership verification using the GA tracking
+ * snippet.
  *
- * The measurement ID is hardcoded below. To change it later, edit
- * this file or replace with an env variable (process.env.GA_ID).
+ * The script is loaded with the async attribute so it does not
+ * block the page from rendering. The inline init script runs
+ * after the gtag.js library finishes loading and pushes the
+ * initial page_view event to GA4.
+ *
+ * Trade-off: putting GA in the <head> is slightly less optimal
+ * for performance than loading it lazily in the body, but we
+ * accept this trade-off because site verification requires the
+ * snippet to be in the <head>.
  *
  * Google Analytics sets first-party cookies (_ga, _ga_<id>, _gid)
  * on the visitor's browser. See the Privacy Policy Cookies section
@@ -18,23 +31,25 @@ import Script from "next/script";
  * Measurement ID: G-SDZ836TS8D (Google Analytics 4 property).
  */
 
-export function GoogleAnalytics() {
+export function GoogleAnalyticsHead() {
   return (
     <>
-      <Script
+      <script
+        async
         src="https://www.googletagmanager.com/gtag/js?id=G-SDZ836TS8D"
-        strategy="afterInteractive"
       />
-      <Script id="ga4-init" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-SDZ836TS8D', {
-            anonymize_ip: true
-          });
-        `}
-      </Script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SDZ836TS8D', {
+              anonymize_ip: true
+            });
+          `,
+        }}
+      />
     </>
   );
 }
