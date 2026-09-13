@@ -52,7 +52,7 @@ server.log
 /download
 /examples
 /tests
-/scripts
+/scripts/test-*.sh
 /skills
 /agent-ctx
 /mini-services

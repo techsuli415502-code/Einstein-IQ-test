@@ -14,9 +14,13 @@
     </radialGradient>
   </defs>
 
+  <!-- Background: rounded square with deep emerald gradient -->
   <rect width="64" height="64" rx="14" fill="url(#bgGrad)"/>
+
+  <!-- Subtle inner shadow / highlight for premium depth -->
   <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="white" stroke-opacity="0.08"/>
 
+  <!-- Brain silhouette: simplified, recognizable at small sizes -->
   <path d="
     M 32 13
     C 24 13 17 17 14 23
@@ -37,8 +41,10 @@
     Z
   " fill="url(#brainGrad)"/>
 
+  <!-- Center division: subtle vertical line showing two hemispheres -->
   <path d="M 32 14 L 32 50" stroke="#0F766E" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
 
+  <!-- Brain fold lines: visible at larger sizes, fades at 16x16 (which is fine) -->
   <path d="
     M 22 22 Q 26 19 29 23
     M 35 23 Q 38 19 42 22
@@ -46,6 +52,7 @@
     M 36 31 Q 40 27 44 30
   " stroke="#0F766E" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.5"/>
 
+  <!-- Amber 4-pointed spark: Einstein's "aha!" moment -->
   <path d="
     M 52 9
     L 54 14

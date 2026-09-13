@@ -8,20 +8,73 @@
       <stop offset="0%" stop-color="#0F766E" stop-opacity="0.18"/>
       <stop offset="100%" stop-color="#0F766E" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#0F766E"/>
+      <stop offset="100%" stop-color="#0A4A45"/>
+    </linearGradient>
+    <linearGradient id="brainGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E6F4F1"/>
+    </linearGradient>
+    <radialGradient id="sparkGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </radialGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect width="1200" height="630" fill="url(#glow)"/>
-  <g transform="translate(110, 200)">
-    <rect width="92" height="92" rx="20" fill="#0F766E"/>
-    <path d="M32 26c-6.3 0-11.5 5.2-11.5 11.5 0 2.4.8 4.7 2 6.6-1.5 1.7-2.5 4-2.5 6.4 0 4.2 3.3 7.5 7.5 7.5.9 0 1.7-.1 2.5-.3v9.8c0 2.2 1.7 3.9 3.9 3.9s3.9-1.7 3.9-3.9V66c0-3.7 2.3-6.3 5.7-6.3 2.9 0 5.2 1.9 5.8 4.5.6 2.6 2.9 4.5 5.8 4.5 3.2 0 5.8-2.6 5.8-5.8 0-1-.3-2-.7-2.8 1.3-1.9 2.2-4.1 2.2-6.6 0-6.3-5.2-11.5-11.5-11.5-.7 0-1.4.1-2.1.2C52.5 27.6 48.2 26 43.5 26c-4.3 0-8.2 1.6-11.2 4.2C32.7 26.3 32.4 26.2 32 26z" fill="white"/>
-    <circle cx="60" cy="32" r="3.6" fill="#F59E0B"/>
+
+  <!-- Brand mark (favicon design at large scale) -->
+  <g transform="translate(110, 195)">
+    <rect width="100" height="100" rx="22" fill="url(#bgGrad)"/>
+    <rect x="0.7" y="0.7" width="98.6" height="98.6" rx="21.3" fill="none" stroke="white" stroke-opacity="0.08"/>
+    <path d="
+      M 50 20
+      C 37 20 27 25 22 35
+      C 17 39 17 47 22 50
+      C 19 53 19 58 22 60
+      C 20 63 20 66 23 67
+      C 25 73 31 78 39 78
+      L 39 80
+      C 39 82 41 84 43 84
+      L 59 84
+      C 61 84 63 82 63 80
+      L 63 78
+      C 71 78 77 73 79 67
+      C 82 66 82 63 80 60
+      C 83 58 83 53 80 50
+      C 85 47 85 39 80 35
+      C 75 25 65 20 50 20
+      Z
+    " fill="url(#brainGrad)"/>
+    <path d="M 50 22 L 50 78" stroke="#0F766E" stroke-width="2.3" stroke-linecap="round" opacity="0.55"/>
+    <path d="
+      M 35 34 Q 40 30 45 35
+      M 55 35 Q 60 30 65 34
+      M 31 47 Q 38 42 43 47
+      M 57 47 Q 62 42 68 47
+    " stroke="#0F766E" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <path d="
+      M 80 12
+      L 83 22
+      L 92 25
+      L 83 28
+      L 80 38
+      L 77 28
+      L 68 25
+      L 77 22
+      Z
+    " fill="url(#sparkGrad)"/>
   </g>
-  <text x="240" y="265" font-family="Inter, Arial, sans-serif" font-size="76" font-weight="700" fill="#0F1B17">Einstein IQ Test</text>
+
+  <text x="240" y="270" font-family="Inter, Arial, sans-serif" font-size="76" font-weight="700" fill="#0F1B17">Einstein IQ Test</text>
   <text x="240" y="325" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="500" fill="#475569">Free Online IQ Test and Reasoning Quiz</text>
-  <text x="240" y="385" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="400" fill="#64748B">Logical reasoning. Pattern recognition. Problem solving. Cognitive skills.</text>
-  <g transform="translate(240, 430)">
+  <text x="240" y="380" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="400" fill="#64748B">Logical reasoning. Pattern recognition. Problem solving. Cognitive skills.</text>
+
+  <g transform="translate(240, 425)">
     <rect width="260" height="56" rx="12" fill="#0F766E"/>
     <text x="130" y="36" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" fill="white">Start IQ Test</text>
   </g>
-  <text x="900" y="580" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="18" fill="#94A3B8">einsteiniqtest.com</text>
+
+  <text x="1130" y="600" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="18" fill="#94A3B8">einsteiniqtest.com</text>
 </svg>
