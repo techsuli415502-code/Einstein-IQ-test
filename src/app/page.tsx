@@ -2,13 +2,11 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import {
   Brain,
-  ListChecks,
   Target,
   Lightbulb,
   RefreshCw,
-  ShieldCheck,
-  Clock,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IQQuiz } from "@/components/iq-quiz";
@@ -19,6 +17,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { RectangleAd, LeaderboardAd } from "@/components/adsterra-ad";
+import { HeroVisual } from "@/components/hero-visual";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -86,13 +85,6 @@ const faqSchema = {
   })),
 };
 
-const stats = [
-  { label: "Questions", value: "22", icon: ListChecks },
-  { label: "Reasoning types", value: "9", icon: Brain },
-  { label: "Average time", value: "~10 min", icon: Clock },
-  { label: "Cost", value: "Free", icon: ShieldCheck },
-];
-
 const measuredSkills = [
   {
     title: "Logical Reasoning",
@@ -138,65 +130,65 @@ export default function HomePage() {
       />
 
       {/* Hero */}
-      <section className="bg-hero-gradient border-b border-border/60">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
-          <div className="grid items-center gap-10 lg:grid-cols-2">
-            <div className="space-y-6">
-              <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background/80 px-3 py-1 text-xs font-medium text-primary">
-                <Brain className="h-3.5 w-3.5" aria-hidden="true" />
+      <section className="relative overflow-hidden border-b border-border/60 bg-hero-gradient">
+        {/* Background layers: ambient lighting + neural pattern + particles */}
+        <div className="hero-ambient" aria-hidden="true" />
+        <div className="hero-pattern" aria-hidden="true" />
+        <div className="hero-particles absolute inset-0" aria-hidden="true" />
+
+        <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:py-28">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* Left: text content */}
+            <div className="space-y-7">
+              <div className="hero-fade-up hero-fade-up-1 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-background/80 px-3 py-1 text-xs font-medium text-primary backdrop-blur-sm">
+                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
                 Free online IQ style quiz
-              </span>
-              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                Test Your IQ Online
+              </div>
+
+              <h1 className="hero-fade-up hero-fade-up-2 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                Test Your{" "}
+                <span className="hero-glow-iq">IQ</span>{" "}
+                Online
               </h1>
-              <p className="max-w-xl text-lg leading-relaxed text-muted-foreground">
-                Welcome to {siteConfig.name}. Take a free online IQ quiz that
-                checks your logical reasoning, pattern recognition, problem
-                solving, analytical thinking, number reasoning and cognitive
-                skills. You get 22 questions, a clear score, and a skill band
-                at the end. No sign up needed.
+
+              <p className="hero-fade-up hero-fade-up-3 max-w-xl text-lg leading-relaxed text-muted-foreground">
+                Welcome to {siteConfig.name}. Take a free online IQ quiz
+                that checks your logical reasoning, pattern recognition,
+                problem solving, analytical thinking, number reasoning and
+                cognitive skills. You get 22 questions, a clear score, and a
+                skill band at the end. No sign up needed.
               </p>
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+
+              <div className="hero-fade-up hero-fade-up-4 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Button
                   asChild
                   size="lg"
-                  className="sm:min-w-[180px]"
+                  className="hero-cta-primary sm:min-w-[180px]"
                 >
                   <a href="#iq-quiz">
                     Start IQ Test
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </a>
                 </Button>
-                <Button asChild variant="outline" size="lg">
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="border-primary/30 bg-background/60 backdrop-blur-sm hover:bg-background/80"
+                >
                   <Link href="/about">How it works</Link>
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground">
+
+              <p className="hero-fade-up hero-fade-up-5 text-xs text-muted-foreground">
                 For practice and entertainment. Not a clinical or professional
                 IQ assessment.
               </p>
             </div>
 
-            <div className="relative">
-              <div className="mx-auto grid max-w-md grid-cols-2 gap-4 sm:max-w-lg">
-                {stats.map((stat) => (
-                  <div
-                    key={stat.label}
-                    className="rounded-2xl border border-border bg-card p-5 shadow-sm card-hover"
-                  >
-                    <stat.icon
-                      className="h-6 w-6 text-primary"
-                      aria-hidden="true"
-                    />
-                    <p className="mt-3 text-2xl font-bold tracking-tight text-foreground">
-                      {stat.value}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            {/* Right: glassmorphism visual card */}
+            <div className="hero-fade-up hero-fade-up-5 relative">
+              <HeroVisual />
             </div>
           </div>
         </div>

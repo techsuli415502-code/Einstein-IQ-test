@@ -136,3 +136,232 @@
   outline: 2px solid oklch(0.41 0.09 175);
   outline-offset: 2px;
 }
+
+/* ============================================================ */
+/* Premium hero section effects                                  */
+/* ============================================================ */
+
+/* Ambient lighting: soft radial glows layered behind hero content */
+.hero-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 15% 10%, oklch(0.41 0.09 175 / 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 20%, oklch(0.70 0.13 70 / 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 80% at 60% 100%, oklch(0.41 0.09 175 / 0.08) 0%, transparent 55%);
+}
+
+/* Neural network background pattern: subtle dot grid + connecting lines */
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle, oklch(0.41 0.09 175 / 0.18) 1px, transparent 1.5px),
+    radial-gradient(circle, oklch(0.41 0.09 175 / 0.10) 1px, transparent 1.5px);
+  background-size: 32px 32px, 96px 96px;
+  background-position: 0 0, 16px 16px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 80%);
+}
+
+/* Floating particles: small dots that drift slowly */
+.hero-particles::before,
+.hero-particles::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+.hero-particles::before {
+  top: 12%;
+  left: 8%;
+  width: 8px;
+  height: 8px;
+  background: oklch(0.70 0.13 70 / 0.55);
+  box-shadow: 0 0 16px 2px oklch(0.70 0.13 70 / 0.35);
+  animation: hero-float 9s ease-in-out infinite;
+}
+.hero-particles::after {
+  bottom: 18%;
+  right: 12%;
+  width: 6px;
+  height: 6px;
+  background: oklch(0.41 0.09 175 / 0.6);
+  box-shadow: 0 0 14px 2px oklch(0.41 0.09 175 / 0.4);
+  animation: hero-float 11s ease-in-out infinite reverse;
+}
+
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-22px) translateX(10px); }
+}
+
+/* Glow ring around the IQ word in headline */
+.hero-glow-iq {
+  position: relative;
+  background: linear-gradient(
+    120deg,
+    oklch(0.41 0.09 175) 0%,
+    oklch(0.55 0.13 175) 50%,
+    oklch(0.70 0.13 70) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 22px oklch(0.41 0.09 175 / 0.32))
+          drop-shadow(0 0 8px oklch(0.70 0.13 70 / 0.18));
+  animation: hero-glow-pulse 4.5s ease-in-out infinite;
+}
+
+@keyframes hero-glow-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 22px oklch(0.41 0.09 175 / 0.32))
+            drop-shadow(0 0 8px oklch(0.70 0.13 70 / 0.18));
+  }
+  50% {
+    filter: drop-shadow(0 0 30px oklch(0.41 0.09 175 / 0.45))
+            drop-shadow(0 0 12px oklch(0.70 0.13 70 / 0.28));
+  }
+}
+
+/* Premium CTA button with subtle glow and shine */
+.hero-cta-primary {
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 1px 0 0 oklch(0.985 0 0 / 0.18) inset,
+    0 8px 24px -8px oklch(0.41 0.09 175 / 0.55);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.hero-cta-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    oklch(0.985 0 0 / 0.25) 50%,
+    transparent 100%
+  );
+  transform: skewX(-18deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+.hero-cta-primary:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 0 oklch(0.985 0 0 / 0.22) inset,
+    0 12px 30px -8px oklch(0.41 0.09 175 / 0.7);
+}
+.hero-cta-primary:hover::after {
+  left: 140%;
+}
+
+/* Glass card for the hero visual */
+.hero-glass {
+  background:
+    linear-gradient(180deg, oklch(0.985 0 0 / 0.65) 0%, oklch(0.985 0 0 / 0.35) 100%);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid oklch(0.985 0 0 / 0.6);
+  box-shadow:
+    0 1px 0 0 oklch(0.985 0 0 / 0.5) inset,
+    0 24px 48px -16px oklch(0.21 0.03 200 / 0.18),
+    0 8px 16px -8px oklch(0.21 0.03 200 / 0.12);
+}
+
+/* Glass card soft glow ring */
+.hero-glass-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    oklch(0.41 0.09 175 / 0.4) 0%,
+    transparent 30%,
+    transparent 70%,
+    oklch(0.70 0.13 70 / 0.3) 100%
+  );
+  filter: blur(14px);
+  z-index: -1;
+  opacity: 0.55;
+}
+
+/* Animated brain illustration: gentle pulsing */
+.hero-brain-pulse {
+  animation: hero-brain-breathe 6s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes hero-brain-breathe {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.04); opacity: 0.94; }
+}
+
+/* Neural connection lines: animated dashes flowing along the path */
+.hero-neural-line {
+  stroke-dasharray: 4 6;
+  animation: hero-neural-flow 3.5s linear infinite;
+}
+
+@keyframes hero-neural-flow {
+  to { stroke-dashoffset: -20; }
+}
+
+/* Subtle entrance: fade up + small translate */
+.hero-fade-up {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: hero-fade-up-anim 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero-fade-up-1 { animation-delay: 0.05s; }
+.hero-fade-up-2 { animation-delay: 0.15s; }
+.hero-fade-up-3 { animation-delay: 0.25s; }
+.hero-fade-up-4 { animation-delay: 0.35s; }
+.hero-fade-up-5 { animation-delay: 0.50s; }
+
+@keyframes hero-fade-up-anim {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Score chip floating in the visual card */
+.hero-chip-float {
+  animation: hero-chip-bob 5s ease-in-out infinite;
+}
+.hero-chip-float-delay {
+  animation: hero-chip-bob 5s ease-in-out infinite;
+  animation-delay: 2.5s;
+}
+
+@keyframes hero-chip-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Respect reduced motion preferences: disable animations */
+@media (prefers-reduced-motion: reduce) {
+  .hero-particles::before,
+  .hero-particles::after,
+  .hero-glow-iq,
+  .hero-brain-pulse,
+  .hero-neural-line,
+  .hero-chip-float,
+  .hero-chip-float-delay,
+  .hero-fade-up {
+    animation: none;
+  }
+  .hero-fade-up {
+    opacity: 1;
+    transform: none;
+  }
+}
