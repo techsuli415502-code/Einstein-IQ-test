@@ -55,8 +55,9 @@ export function SiteFooter() {
               About the Quiz
             </h2>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>22 questions across reasoning types</li>
-              <li>Instant score and skill band</li>
+              <li>45 questions across Math, Science, History</li>
+              <li>Instant feedback after each answer</li>
+              <li>Per-section scores and full answer review</li>
               <li>No sign up, runs in your browser</li>
               <li>Practice and entertainment only</li>
             </ul>

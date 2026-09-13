@@ -23,7 +23,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Free Online IQ Test | Logical Reasoning and Pattern Quiz",
   description:
-    "Take the Einstein IQ Test free online. Practice 22 reasoning questions covering logical thinking, number sequences, pattern recognition and problem solving. Instant score, no sign up.",
+    "Take the Einstein IQ Test free online. Practice 45 general knowledge questions across Math, Science, and History with instant feedback after each answer. Free, no sign up.",
   alternates: {
     canonical: "/",
   },
@@ -52,11 +52,15 @@ const faqs = [
   },
   {
     q: "How many questions are in the test?",
-    a: "The quiz has 22 questions. They cover number sequences, pattern recognition, logical reasoning, odd one out, verbal reasoning, shape and pattern logic, mathematical reasoning, analytical thinking and problem solving.",
+    a: "The quiz has 45 questions split evenly across three sections: 15 Math, 15 Science, and 15 History. Each question has four multiple choice options and exactly one correct answer.",
   },
   {
     q: "How long does the test take?",
-    a: "Most people finish in around 8 to 12 minutes. There is no timer, so you can read each question carefully and take as long as you need. Going at a steady pace usually produces a more accurate result than rushing.",
+    a: "Most people finish in around 15 to 25 minutes. There is no timer, so you can read each question carefully and take as long as you need. Going at a steady pace usually produces a more accurate result than rushing.",
+  },
+  {
+    q: "Do I get feedback after each answer?",
+    a: "Yes. The moment you select an answer, the quiz shows whether your choice was correct or incorrect, reveals the correct answer if you got it wrong, and gives a short explanation so you understand why. You can then move on to the next question at your own pace.",
   },
   {
     q: "Can I retake the IQ test?",
@@ -155,8 +159,9 @@ export default function HomePage() {
                 Welcome to {siteConfig.name}. Take a free online IQ quiz
                 that checks your logical reasoning, pattern recognition,
                 problem solving, analytical thinking, number reasoning and
-                cognitive skills. You get 22 questions, a clear score, and a
-                skill band at the end. No sign up needed.
+                cognitive skills. You get 45 questions across Math, Science,
+                and History, with instant feedback after each answer and a
+                clear score breakdown at the end. No sign up needed.
               </p>
 
               <div className="hero-fade-up hero-fade-up-4 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -202,9 +207,10 @@ export default function HomePage() {
               Take the Einstein IQ Test
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
-              Answer 22 reasoning questions and get an instant score with a
-              skill band. The quiz runs in your browser and your answers are
-              not stored on a server.
+              Answer 45 questions across Math, Science, and History with
+              instant feedback after each answer. Get a per-section score
+              and a complete answer review at the end. The quiz runs in your
+              browser and your answers are not stored on a server.
             </p>
           </div>
           <IQQuiz />

@@ -1,41 +1,76 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
 import {
   Brain,
-  ChevronLeft,
   ChevronRight,
   RotateCcw,
   CheckCircle2,
-  AlertTriangle,
-  Eraser,
+  XCircle,
   Trophy,
+  ListChecks,
+  Lightbulb,
+  Calculator,
+  Atom,
+  Scroll,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import {
   quizQuestions,
+  quizCategories,
   getScoreBand,
   type QuizQuestion,
+  type QuizCategory,
 } from "@/lib/quiz-data";
 
 type Stage = "intro" | "quiz" | "result";
 
 const letterLabels = ["A", "B", "C", "D", "E", "F"];
 
+const categoryIcons: Record<QuizCategory, typeof Calculator> = {
+  Math: Calculator,
+  Science: Atom,
+  History: Scroll,
+};
+
+const categoryColors: Record<
+  QuizCategory,
+  { text: string; bg: string; ring: string; badge: string }
+> = {
+  Math: {
+    text: "text-primary",
+    bg: "bg-primary/10",
+    ring: "ring-primary",
+    badge: "bg-primary/10 text-primary",
+  },
+  Science: {
+    text: "text-amber-600",
+    bg: "bg-amber-500/10",
+    ring: "ring-amber-500",
+    badge: "bg-amber-500/10 text-amber-600",
+  },
+  History: {
+    text: "text-amber-700",
+    bg: "bg-amber-700/10",
+    ring: "ring-amber-700",
+    badge: "bg-amber-700/10 text-amber-700",
+  },
+};
+
 export function IQQuiz() {
-  const router = useRouter();
   const [stage, setStage] = React.useState<Stage>("intro");
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  // Track user answers as an array indexed by question position. null means
+  // the question has not been answered yet.
   const [answers, setAnswers] = React.useState<(number | null)[]>(
     () => quizQuestions.map(() => null)
   );
-  const [showRequiredNotice, setShowRequiredNotice] = React.useState(false);
 
   const totalQuestions = quizQuestions.length;
   const currentQuestion = quizQuestions[currentIndex];
+  const currentCategory = currentQuestion?.category;
   const progressValue =
     stage === "quiz"
       ? Math.round(((currentIndex + 1) / totalQuestions) * 100)
@@ -45,11 +80,13 @@ export function IQQuiz() {
     setStage("quiz");
     setCurrentIndex(0);
     setAnswers(quizQuestions.map(() => null));
-    setShowRequiredNotice(false);
   };
 
   const selectAnswer = (optionIndex: number) => {
-    setShowRequiredNotice(false);
+    // Lock the question once answered. The user cannot change their answer
+    // for the current question after selecting, which prevents accidental
+    // multiple selections and makes the feedback unambiguous.
+    if (answers[currentIndex] !== null) return;
     setAnswers((prev) => {
       const next = [...prev];
       next[currentIndex] = optionIndex;
@@ -57,21 +94,7 @@ export function IQQuiz() {
     });
   };
 
-  const clearAnswer = () => {
-    setShowRequiredNotice(false);
-    setAnswers((prev) => {
-      const next = [...prev];
-      next[currentIndex] = null;
-      return next;
-    });
-  };
-
   const goNext = () => {
-    if (answers[currentIndex] === null) {
-      setShowRequiredNotice(true);
-      return;
-    }
-    setShowRequiredNotice(false);
     if (currentIndex < totalQuestions - 1) {
       setCurrentIndex((i) => i + 1);
     } else {
@@ -79,19 +102,10 @@ export function IQQuiz() {
     }
   };
 
-  const goPrev = () => {
-    setShowRequiredNotice(false);
-    if (currentIndex > 0) {
-      setCurrentIndex((i) => i - 1);
-    }
-  };
-
   const restart = () => {
     setStage("intro");
     setCurrentIndex(0);
     setAnswers(quizQuestions.map(() => null));
-    setShowRequiredNotice(false);
-    // Smooth scroll back up to the quiz top for nicer UX.
     requestAnimationFrame(() => {
       document
         .getElementById("iq-quiz")
@@ -99,17 +113,26 @@ export function IQQuiz() {
     });
   };
 
-  // Calculate score for the result screen.
-  const score = React.useMemo(() => {
-    if (stage !== "result") return 0;
+  // Calculate scores per category for the result screen.
+  const { score, perCategory } = React.useMemo(() => {
     let correct = 0;
+    const byCategory: Record<QuizCategory, { correct: number; total: number }> =
+      {
+        Math: { correct: 0, total: 0 },
+        Science: { correct: 0, total: 0 },
+        History: { correct: 0, total: 0 },
+      };
     answers.forEach((ans, idx) => {
-      if (ans !== null && ans === quizQuestions[idx].correctIndex) {
+      const q = quizQuestions[idx];
+      if (!q) return;
+      byCategory[q.category].total += 1;
+      if (ans !== null && ans === q.correctIndex) {
         correct += 1;
+        byCategory[q.category].correct += 1;
       }
     });
-    return correct;
-  }, [stage, answers]);
+    return { score: correct, perCategory: byCategory };
+  }, [answers]);
 
   const band = getScoreBand(score);
 
@@ -119,31 +142,6 @@ export function IQQuiz() {
       .getElementById("iq-quiz")
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
-  // Handles links from other pages that include #iq-quiz hash. We just
-  // let the browser scroll to the section naturally; nothing else needed.
-  React.useEffect(() => {
-    if (typeof window !== "undefined" && window.location.hash === "#iq-quiz") {
-      const el = document.getElementById("iq-quiz");
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 100);
-      }
-    }
-  }, []);
-
-  // Handle #start-iq-test hash by auto-starting the quiz.
-  React.useEffect(() => {
-    if (typeof window !== "undefined" && window.location.hash === "#start-iq-test") {
-      startQuiz();
-      setTimeout(() => {
-        document
-          .getElementById("iq-quiz")
-          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 200);
-    }
-  }, [startQuiz]);
 
   return (
     <section
@@ -159,137 +157,24 @@ export function IQQuiz() {
         <QuizIntro onStart={handleStartClick} totalQuestions={totalQuestions} />
       )}
 
-      {stage === "quiz" && (
-        <article
-          className="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8"
-          aria-live="polite"
-        >
-          <header className="mb-6 space-y-4">
-            <div className="flex items-center justify-between gap-3 text-sm">
-              <span className="inline-flex items-center gap-2 rounded-full bg-accent px-3 py-1 font-medium text-accent-foreground">
-                <Brain className="h-3.5 w-3.5" aria-hidden="true" />
-                Question {currentIndex + 1} of {totalQuestions}
-              </span>
-              <span className="text-muted-foreground">
-                {currentQuestion.category}
-              </span>
-            </div>
-            <Progress
-              value={progressValue}
-              className="h-2"
-              aria-label={`Progress: ${progressValue} percent`}
-              aria-valuenow={progressValue}
-              aria-valuemin={0}
-              aria-valuemax={100}
-            />
-          </header>
-
-          <div className="space-y-5">
-            <h3 className="text-xl font-semibold leading-snug text-foreground sm:text-2xl">
-              {currentQuestion.question}
-            </h3>
-
-            <div
-              role="radiogroup"
-              aria-label="Answer options"
-              className="grid gap-3"
-            >
-              {currentQuestion.options.map((option, idx) => {
-                const selected = answers[currentIndex] === idx;
-                return (
-                  <button
-                    key={`${currentQuestion.id}-${idx}`}
-                    type="button"
-                    role="radio"
-                    aria-checked={selected}
-                    onClick={() => selectAnswer(idx)}
-                    className={cn(
-                      "group flex items-center gap-3 rounded-xl border px-4 py-3.5 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                      selected
-                        ? "border-primary bg-primary/5 ring-1 ring-primary"
-                        : "border-border bg-background hover:border-primary/40 hover:bg-accent/40"
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border text-sm font-semibold transition-colors",
-                        selected
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border bg-muted text-muted-foreground group-hover:border-primary/40"
-                      )}
-                      aria-hidden="true"
-                    >
-                      {letterLabels[idx]}
-                    </span>
-                    <span className="flex-1 text-sm font-medium text-foreground sm:text-base">
-                      {option}
-                    </span>
-                    {selected && (
-                      <CheckCircle2
-                        className="h-5 w-5 text-primary"
-                        aria-hidden="true"
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            {showRequiredNotice && (
-              <p
-                role="alert"
-                className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive"
-              >
-                <AlertTriangle
-                  className="h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                />
-                Please choose an answer before moving to the next question.
-              </p>
-            )}
-          </div>
-
-          <footer className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-2">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={goPrev}
-                disabled={currentIndex === 0}
-                aria-label="Previous question"
-              >
-                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
-                Previous
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={clearAnswer}
-                disabled={answers[currentIndex] === null}
-                aria-label="Clear selected answer"
-              >
-                <Eraser className="h-4 w-4" aria-hidden="true" />
-                Clear
-              </Button>
-            </div>
-            <Button
-              type="button"
-              onClick={goNext}
-              className="sm:min-w-[140px]"
-            >
-              {currentIndex === totalQuestions - 1 ? "See Result" : "Next"}
-              <ChevronRight className="h-4 w-4" aria-hidden="true" />
-            </Button>
-          </footer>
-        </article>
+      {stage === "quiz" && currentQuestion && currentCategory && (
+        <QuizQuestion
+          question={currentQuestion}
+          questionNumber={currentIndex + 1}
+          totalQuestions={totalQuestions}
+          progressValue={progressValue}
+          selectedIndex={answers[currentIndex]}
+          onSelect={selectAnswer}
+          onNext={goNext}
+          isLastQuestion={currentIndex === totalQuestions - 1}
+        />
       )}
 
       {stage === "result" && (
         <QuizResult
           score={score}
           total={totalQuestions}
+          perCategory={perCategory}
           bandLabel={band.label}
           bandDescription={band.description}
           onRestart={restart}
@@ -319,44 +204,254 @@ function QuizIntro({
         </div>
         <div className="space-y-1.5">
           <h3 id="quiz-intro-title" className="text-xl font-semibold sm:text-2xl">
-            Ready to start the IQ quiz?
+            Ready to start the quiz?
           </h3>
           <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-            You will see {totalQuestions} questions covering logical reasoning,
-            number sequences, pattern recognition, problem solving and more.
-            Take your time, read each option, and choose the best answer.
+            You will see {totalQuestions} questions across three categories:
+            Math, Science, and History. After each question, you will see
+            instantly whether your answer was correct, along with a short
+            explanation. Take your time and read each option carefully.
           </p>
         </div>
       </div>
 
       <ul className="mt-6 grid gap-3 text-sm text-foreground sm:grid-cols-2">
+        {quizCategories.map((cat) => {
+          const Icon = categoryIcons[cat];
+          const count = quizQuestions.filter((q) => q.category === cat).length;
+          return (
+            <li
+              key={cat}
+              className="flex items-start gap-3 rounded-lg border border-border bg-secondary/40 px-3 py-2.5"
+            >
+              <Icon className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+              <span>
+                <span className="font-semibold text-foreground">{cat}</span>:{" "}
+                {count} questions
+              </span>
+            </li>
+          );
+        })}
         <li className="flex items-start gap-2 rounded-lg border border-border bg-secondary/40 px-3 py-2.5">
-          <span className="font-semibold text-primary">22</span>
-          questions across reasoning types
-        </li>
-        <li className="flex items-start gap-2 rounded-lg border border-border bg-secondary/40 px-3 py-2.5">
-          <span className="font-semibold text-primary">~10 min</span>
-          to complete, runs fully in your browser
-        </li>
-        <li className="flex items-start gap-2 rounded-lg border border-border bg-secondary/40 px-3 py-2.5">
-          <span className="font-semibold text-primary">Instant</span>
-          score with a skill band interpretation
-        </li>
-        <li className="flex items-start gap-2 rounded-lg border border-border bg-secondary/40 px-3 py-2.5">
-          <span className="font-semibold text-primary">Free</span>
-          no sign up, no data stored on a server
+          <ListChecks className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+          <span>
+            <span className="font-semibold text-foreground">Total</span>: {totalQuestions} questions, instant feedback
+          </span>
         </li>
       </ul>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Button size="lg" onClick={onStart} className="sm:min-w-[180px]">
-          Start IQ Test
+          Start Quiz
         </Button>
         <p className="text-xs text-muted-foreground">
-          This online quiz is for practice and entertainment. It is not a
-          clinical or professionally administered IQ assessment.
+          This quiz is for practice and entertainment. It is not a clinical
+          or professionally administered IQ assessment.
         </p>
       </div>
+    </article>
+  );
+}
+
+function QuizQuestion({
+  question,
+  questionNumber,
+  totalQuestions,
+  progressValue,
+  selectedIndex,
+  onSelect,
+  onNext,
+  isLastQuestion,
+}: {
+  question: QuizQuestion;
+  questionNumber: number;
+  totalQuestions: number;
+  progressValue: number;
+  selectedIndex: number | null;
+  onSelect: (optionIndex: number) => void;
+  onNext: () => void;
+  isLastQuestion: boolean;
+}) {
+  const category = question.category;
+  const Icon = categoryIcons[category];
+  const colors = categoryColors[category];
+  const hasAnswered = selectedIndex !== null;
+  const isCorrect = hasAnswered && selectedIndex === question.correctIndex;
+  const correctIndex = question.correctIndex;
+
+  return (
+    <article
+      className="mx-auto max-w-3xl rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8"
+      aria-live="polite"
+    >
+      <header className="mb-6 space-y-4">
+        <div className="flex items-center justify-between gap-3 text-sm">
+          <span
+            className={cn(
+              "inline-flex items-center gap-2 rounded-full px-3 py-1 font-medium",
+              colors.badge
+            )}
+          >
+            <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+            {category}
+          </span>
+          <span className="text-muted-foreground">
+            Question {questionNumber} of {totalQuestions}
+          </span>
+        </div>
+        <Progress
+          value={progressValue}
+          className="h-2"
+          aria-label={`Progress: ${progressValue} percent`}
+          aria-valuenow={progressValue}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        />
+      </header>
+
+      <div className="space-y-5">
+        <h3 className="text-xl font-semibold leading-snug text-foreground sm:text-2xl">
+          {question.question}
+        </h3>
+
+        <div
+          role="radiogroup"
+          aria-label="Answer options"
+          className="grid gap-3"
+        >
+          {question.options.map((option, idx) => {
+            const isSelected = selectedIndex === idx;
+            const isCorrectOption = idx === correctIndex;
+            // After answering, color the selected option green (correct) or
+            // red (incorrect), and color the correct option green if the user
+            // got it wrong.
+            let optionStyle = "";
+            if (hasAnswered) {
+              if (isCorrectOption) {
+                optionStyle = "border-primary bg-primary/5 ring-1 ring-primary";
+              } else if (isSelected) {
+                optionStyle = "border-destructive bg-destructive/5 ring-1 ring-destructive";
+              } else {
+                optionStyle = "border-border bg-muted/40 opacity-60";
+              }
+            } else {
+              optionStyle = "border-border bg-background hover:border-primary/40 hover:bg-accent/40";
+            }
+
+            return (
+              <button
+                key={`${question.id}-${idx}`}
+                type="button"
+                role="radio"
+                aria-checked={isSelected}
+                disabled={hasAnswered}
+                onClick={() => onSelect(idx)}
+                className={cn(
+                  "group flex items-center gap-3 rounded-xl border px-4 py-3.5 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                  optionStyle,
+                  hasAnswered && "cursor-default"
+                )}
+              >
+                <span
+                  className={cn(
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border text-sm font-semibold transition-colors",
+                    hasAnswered && isCorrectOption
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : hasAnswered && isSelected
+                        ? "border-destructive bg-destructive text-white"
+                        : "border-border bg-muted text-muted-foreground"
+                  )}
+                  aria-hidden="true"
+                >
+                  {letterLabels[idx]}
+                </span>
+                <span className="flex-1 text-sm font-medium text-foreground sm:text-base">
+                  {option}
+                </span>
+                {hasAnswered && isCorrectOption && (
+                  <CheckCircle2
+                    className="h-5 w-5 text-primary"
+                    aria-hidden="true"
+                  />
+                )}
+                {hasAnswered && isSelected && !isCorrectOption && (
+                  <XCircle
+                    className="h-5 w-5 text-destructive"
+                    aria-hidden="true"
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Immediate feedback panel */}
+        {hasAnswered && (
+          <div
+            className={cn(
+              "rounded-xl border px-4 py-4",
+              isCorrect
+                ? "border-primary/30 bg-primary/5"
+                : "border-destructive/30 bg-destructive/5"
+            )}
+            role="status"
+            aria-live="polite"
+          >
+            <div className="flex items-start gap-3">
+              {isCorrect ? (
+                <CheckCircle2
+                  className="h-5 w-5 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+              ) : (
+                <XCircle
+                  className="h-5 w-5 shrink-0 text-destructive"
+                  aria-hidden="true"
+                />
+              )}
+              <div className="space-y-1.5">
+                <p
+                  className={cn(
+                    "text-sm font-semibold",
+                    isCorrect ? "text-primary" : "text-destructive"
+                  )}
+                >
+                  {isCorrect ? "Correct!" : "Incorrect."}
+                  {!isCorrect && (
+                    <>
+                      {" "}
+                      The correct answer is{" "}
+                      <span className="font-semibold">
+                        {letterLabels[correctIndex]}. {question.options[correctIndex]}
+                      </span>
+                      .
+                    </>
+                  )}
+                </p>
+                <div className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
+                  <Lightbulb
+                    className="h-4 w-4 shrink-0 text-amber-500 mt-0.5"
+                    aria-hidden="true"
+                  />
+                  <p>{question.explanation}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <footer className="mt-7 flex items-center justify-end">
+        <Button
+          type="button"
+          onClick={onNext}
+          disabled={!hasAnswered}
+          className="min-w-[160px]"
+        >
+          {isLastQuestion ? "See Results" : "Next Question"}
+          <ChevronRight className="h-4 w-4" aria-hidden="true" />
+        </Button>
+      </footer>
     </article>
   );
 }
@@ -364,6 +459,7 @@ function QuizIntro({
 function QuizResult({
   score,
   total,
+  perCategory,
   bandLabel,
   bandDescription,
   onRestart,
@@ -372,6 +468,7 @@ function QuizResult({
 }: {
   score: number;
   total: number;
+  perCategory: Record<QuizCategory, { correct: number; total: number }>;
   bandLabel: string;
   bandDescription: string;
   onRestart: () => void;
@@ -379,6 +476,7 @@ function QuizResult({
   answers: (number | null)[];
 }) {
   const percentage = Math.round((score / total) * 100);
+  const incorrect = total - score;
 
   return (
     <article
@@ -390,7 +488,7 @@ function QuizResult({
           <Trophy className="h-7 w-7" aria-hidden="true" />
         </div>
         <h3 id="result-title" className="mt-4 text-2xl font-semibold sm:text-3xl">
-          Your Score
+          Your Results
         </h3>
         <p className="mt-3 text-5xl font-bold tracking-tight text-primary sm:text-6xl">
           {score}
@@ -409,12 +507,70 @@ function QuizResult({
           </p>
         </div>
 
+        {/* Quick stats */}
+        <div className="mt-5 grid w-full grid-cols-3 gap-3 text-center">
+          <div className="rounded-lg border border-primary/30 bg-primary/5 px-3 py-3">
+            <p className="text-2xl font-bold text-primary">{score}</p>
+            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+              Correct
+            </p>
+          </div>
+          <div className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-3">
+            <p className="text-2xl font-bold text-destructive">{incorrect}</p>
+            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+              Incorrect
+            </p>
+          </div>
+          <div className="rounded-lg border border-border bg-secondary/40 px-3 py-3">
+            <p className="text-2xl font-bold text-foreground">{percentage}%</p>
+            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+              Overall
+            </p>
+          </div>
+        </div>
+
+        {/* Per-category scores */}
+        <div className="mt-5 w-full space-y-3 text-left">
+          <h4 className="text-sm font-semibold text-foreground">
+            Scores by category
+          </h4>
+          {quizCategories.map((cat) => {
+            const stat = perCategory[cat];
+            const catPercent = stat.total
+              ? Math.round((stat.correct / stat.total) * 100)
+              : 0;
+            const Icon = categoryIcons[cat];
+            const colors = categoryColors[cat];
+            return (
+              <div
+                key={cat}
+                className="rounded-lg border border-border bg-secondary/30 px-4 py-3"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <Icon className={cn("h-4 w-4", colors.text)} aria-hidden="true" />
+                    <span className="text-sm font-medium text-foreground">{cat}</span>
+                  </div>
+                  <span className="text-sm font-semibold text-foreground">
+                    {stat.correct} / {stat.total}
+                  </span>
+                </div>
+                <Progress
+                  value={catPercent}
+                  className={cn("mt-2 h-1.5")}
+                  aria-label={`${cat} score: ${stat.correct} out of ${stat.total}`}
+                />
+              </div>
+            );
+          })}
+        </div>
+
         <p className="mt-4 text-xs text-muted-foreground">
           This quiz is designed for educational and entertainment use. It is
           not a clinical or professionally administered IQ assessment.
         </p>
 
-        <div className="mt-6 flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
+        <div className="mt-6 flex w-full flex-col gap-3 sm:justify-center">
           <Button size="lg" onClick={onRestart} className="sm:min-w-[180px]">
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Try Again
@@ -424,52 +580,75 @@ function QuizResult({
 
       <details className="mt-8 rounded-xl border border-border bg-background/50 p-4">
         <summary className="cursor-pointer text-sm font-medium text-foreground">
-          Review your answers
+          Review all {total} questions
         </summary>
-        <ol className="mt-4 space-y-4 text-sm">
-          {questions.map((q, idx) => {
-            const userAnswer = answers[idx];
-            const isCorrect = userAnswer === q.correctIndex;
+        <div className="mt-4 space-y-6">
+          {quizCategories.map((cat) => {
+            const catQuestions = questions
+              .map((q, idx) => ({ q, idx }))
+              .filter(({ q }) => q.category === cat);
+            const Icon = categoryIcons[cat];
+            const colors = categoryColors[cat];
             return (
-              <li
-                key={q.id}
-                className="rounded-lg border border-border bg-background p-3"
-              >
-                <p className="font-medium text-foreground">
-                  {idx + 1}. {q.question}
-                </p>
-                <p className="mt-1.5 text-muted-foreground">
-                  Your answer:{" "}
-                  {userAnswer === null ? (
-                    <span className="italic">Skipped</span>
-                  ) : (
-                    <span
-                      className={
-                        isCorrect
-                          ? "font-medium text-primary"
-                          : "font-medium text-destructive"
-                      }
-                    >
-                      {letterLabels[userAnswer]}. {q.options[userAnswer]}
-                    </span>
-                  )}
-                </p>
-                {!isCorrect && (
-                  <p className="mt-1 text-muted-foreground">
-                    Correct answer:{" "}
-                    <span className="font-medium text-primary">
-                      {letterLabels[q.correctIndex]}.{" "}
-                      {q.options[q.correctIndex]}
-                    </span>
-                  </p>
-                )}
-                <p className="mt-2 text-xs text-muted-foreground">
-                  {q.explanation}
-                </p>
-              </li>
+              <div key={cat} className="space-y-3">
+                <div className="flex items-center gap-2 border-b border-border pb-2">
+                  <Icon className={cn("h-4 w-4", colors.text)} aria-hidden="true" />
+                  <h5 className="text-sm font-semibold text-foreground">
+                    {cat} section
+                  </h5>
+                  <span className="ml-auto text-xs text-muted-foreground">
+                    {perCategory[cat].correct} / {perCategory[cat].total} correct
+                  </span>
+                </div>
+                <ol className="space-y-3 text-sm">
+                  {catQuestions.map(({ q, idx }) => {
+                    const userAnswer = answers[idx];
+                    const isQCorrect = userAnswer === q.correctIndex;
+                    return (
+                      <li
+                        key={q.id}
+                        className="rounded-lg border border-border bg-background p-3"
+                      >
+                        <p className="font-medium text-foreground">
+                          {q.question}
+                        </p>
+                        <p className="mt-1.5 text-muted-foreground">
+                          Your answer:{" "}
+                          {userAnswer === null ? (
+                            <span className="italic">Skipped</span>
+                          ) : (
+                            <span
+                              className={
+                                isQCorrect
+                                  ? "font-medium text-primary"
+                                  : "font-medium text-destructive"
+                              }
+                            >
+                              {letterLabels[userAnswer]}.{" "}
+                              {q.options[userAnswer]}
+                            </span>
+                          )}
+                        </p>
+                        {!isQCorrect && (
+                          <p className="mt-1 text-muted-foreground">
+                            Correct answer:{" "}
+                            <span className="font-medium text-primary">
+                              {letterLabels[q.correctIndex]}.{" "}
+                              {q.options[q.correctIndex]}
+                            </span>
+                          </p>
+                        )}
+                        <p className="mt-2 text-xs text-muted-foreground">
+                          {q.explanation}
+                        </p>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
             );
           })}
-        </ol>
+        </div>
       </details>
     </article>
   );
