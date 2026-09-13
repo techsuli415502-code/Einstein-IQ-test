@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://einsteiniqtest.com/sitemap.xml
+Sitemap: https://einsteiniqtest.vercel.app/sitemap.xml
