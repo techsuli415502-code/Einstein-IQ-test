@@ -22,7 +22,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} | Free Online IQ Test and Reasoning Quiz`,
+    default: `${siteConfig.name} | Free Online Einstein IQ Test and Reasoning Quiz`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} | Free Online IQ Test and Reasoning Quiz`,
+    title: "Free Online Einstein IQ Test | Logical Reasoning Quiz",
     description: siteConfig.description,
     images: [
       {
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} | Free Online IQ Test`,
+    title: "Free Online Einstein IQ Test | Logical Reasoning Quiz",
     description: siteConfig.description,
     creator: siteConfig.twitter,
     images: [siteConfig.ogImage],

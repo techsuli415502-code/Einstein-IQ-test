@@ -21,7 +21,7 @@ import { HeroVisual } from "@/components/hero-visual";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Free Online IQ Test | Logical Reasoning and Pattern Quiz",
+  title: "Free Online Einstein IQ Test | Logical Reasoning Quiz",
   description:
     "Take the Einstein IQ Test free online. Practice 45 general knowledge questions across Math, Science, and History with instant feedback after each answer. Free, no sign up.",
   alternates: {
