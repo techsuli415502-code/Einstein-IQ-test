@@ -152,7 +152,7 @@ const sections = [
     icon: ExternalLink,
     title: "Contact",
     body: [
-      "If you have any questions about this privacy policy or about how the quiz works, please reach out through the Contact Us page or send an email directly to hello@einsteiniqtest.com. We are happy to clarify anything that is unclear.",
+      "If you have any questions about this privacy policy or about how the quiz works, please reach out through the Contact Us page or send an email directly to techsuli415502@gmail.com. We are happy to clarify anything that is unclear.",
       "Because the contact form is currently a front end demo, no message is sent in this build. To get in touch before the form is connected to an email service, please email us directly at the address shown above.",
     ],
   },
