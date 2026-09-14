@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { Brain, ShieldCheck, Target, RefreshCw, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RectangleAd } from "@/components/adsterra-ad";
-import { siteConfig } from "@/lib/site-config";
+import { AuthorCard } from "@/components/author-card";
+import { siteConfig, authorProfile } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -213,6 +214,37 @@ export default function AboutPage() {
       <div className="py-6">
         <RectangleAd />
       </div>
+
+      {/* About the Author section - E-E-A-T signal */}
+      <section className="py-14 sm:py-20">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6">
+          <div className="mb-6">
+            <span className="inline-flex items-center gap-2 rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
+              <Brain className="h-3.5 w-3.5" aria-hidden="true" />
+              Meet the author
+            </span>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground">
+              Who Writes the Content
+            </h2>
+            <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">
+              Every quiz question, educational section, and help article on{" "}
+              {siteConfig.name} is written and reviewed by a real person who
+              focuses on clarity, accuracy, and a helpful reader experience.
+              We do not use auto-generated content for our educational
+              material.
+            </p>
+          </div>
+          <AuthorCard />
+          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            {authorProfile.name} works as a {authorProfile.role} on the
+            Einstein IQ Test project. He researches each topic carefully,
+            checks facts against reliable general knowledge sources, and
+            rewrites explanations until they are easy to follow. If you spot
+            an error or have a suggestion for a question, please reach out
+            through the Contact Us page.
+          </p>
+        </div>
+      </section>
 
       <section className="border-t border-border/60 bg-secondary/30 py-14 sm:py-20">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">

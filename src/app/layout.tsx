@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { LeaderboardAd } from "@/components/adsterra-ad";
 import { AnchorAd } from "@/components/anchor-ad";
 import { GoogleAnalyticsHead } from "@/components/google-analytics";
-import { siteConfig } from "@/lib/site-config";
+import { siteConfig, authorProfile } from "@/lib/site-config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
     "Analytical Thinking",
     "Online Intelligence Quiz",
   ],
-  authors: [{ name: siteConfig.author }],
-  creator: siteConfig.author,
+  authors: [{ name: authorProfile.name, url: `${siteConfig.url}/about` }],
+  creator: authorProfile.name,
   publisher: siteConfig.name,
   applicationName: siteConfig.name,
   robots: {
@@ -159,10 +159,37 @@ const organizationSchema = {
   image: siteConfig.logo,
   description: siteConfig.description,
   email: siteConfig.contactEmail,
+  // The author of the site's content. Linking Organization -> author
+  // (Person) is a recommended E-E-A-T pattern.
+  founder: {
+    "@type": "Person",
+    name: authorProfile.name,
+    jobTitle: authorProfile.role,
+  },
   sameAs: [],
 };
 
-// WebPage schema for the homepage with publisher reference.
+// Person schema for the author (Jacob Moses). This is the primary
+// E-E-A-T signal Google uses to identify who created the content.
+// Jacob is presented only as a Content Specialist - no medical,
+// scientific, or research credentials are claimed.
+const authorSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: authorProfile.name,
+  jobTitle: authorProfile.role,
+  description: authorProfile.shortBio,
+  url: `${siteConfig.url}/about`,
+  image: `${siteConfig.url}${authorProfile.avatar}`,
+  worksFor: {
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url,
+  },
+  sameAs: authorProfile.sameAs,
+};
+
+// WebPage schema for the homepage with publisher and author reference.
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
@@ -173,6 +200,12 @@ const webPageSchema = {
     "@type": "WebSite",
     name: siteConfig.name,
     url: siteConfig.url,
+  },
+  author: {
+    "@type": "Person",
+    name: authorProfile.name,
+    jobTitle: authorProfile.role,
+    url: `${siteConfig.url}/about`,
   },
   publisher: {
     "@type": "Organization",
@@ -209,9 +242,11 @@ export default function RootLayout({
         {/* Sticky bottom anchor ad. Fixed to viewport, dismissible per session. */}
         <AnchorAd />
         <Toaster />
-        {/* Structured data for Google search: WebSite + Organization + WebPage.
-            The Organization schema with a logo field is what tells Google
-            which image to show as the site's logo in search results. */}
+        {/* Structured data for Google search: WebSite + Organization + Person (author) + WebPage.
+            The Organization schema with a logo field tells Google which image
+            to show as the site's logo in search results.
+            The Person schema is the E-E-A-T signal that tells Google who
+            creates the content (Jacob Moses, Content Specialist). */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
@@ -219,6 +254,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(authorSchema) }}
         />
         <script
           type="application/ld+json"

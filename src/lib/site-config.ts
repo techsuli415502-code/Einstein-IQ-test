@@ -41,4 +41,25 @@ export const siteConfig = {
   ],
 } as const;
 
+// Author profile used across the site for E-E-A-T signals.
+// Jacob Moses is presented only as a Content Specialist. He is not
+// claimed to be a licensed psychologist, doctor, scientist, researcher,
+// or any other credentialed professional. The bio is honest and avoids
+// unsupported credentials, fake reviews, or exaggerated expertise.
+export const authorProfile = {
+  name: "Jacob Moses",
+  role: "Content Specialist",
+  bio: "Jacob Moses is a Content Specialist focused on creating clear, useful, and engaging online content. He researches topics carefully and presents information in a simple, reader-friendly way, with a focus on accuracy, clarity, and a helpful user experience. At Einstein IQ Test, Jacob works on the quiz content, educational sections, and help articles, making sure each piece is easy to read and grounded in reliable general knowledge.",
+  shortBio:
+    "Jacob Moses is a Content Specialist focused on creating clear, useful, and engaging online content. He researches topics carefully and presents information in a simple, reader-friendly way.",
+  // SVG initials avatar (no real photo, no fake face). Uses the brand
+  // emerald color so the avatar feels native to the site design.
+  avatar: "/author-jacob-moses.svg",
+  // The author does not have public social profiles we can verify,
+  // so we leave sameAs empty instead of inventing fake links.
+  sameAs: [] as string[],
+} as const;
+
+export type AuthorProfile = typeof authorProfile;
+
 export type SiteConfig = typeof siteConfig;

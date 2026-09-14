@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="avatarBg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#0F766E"/>
+      <stop offset="100%" stop-color="#0A4A45"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E6F4F1"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="60" fill="url(#avatarBg)"/>
+  <rect x="1" y="1" width="118" height="118" rx="59" fill="none" stroke="white" stroke-opacity="0.1"/>
+  <text
+    x="60" y="60"
+    font-family="Inter, Arial, sans-serif"
+    font-size="46"
+    font-weight="700"
+    fill="url(#textGrad)"
+    text-anchor="middle"
+    dominant-baseline="central"
+    letter-spacing="-1"
+  >JM</text>
+</svg>

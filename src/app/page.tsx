@@ -18,7 +18,8 @@ import {
 } from "@/components/ui/accordion";
 import { RectangleAd, LeaderboardAd } from "@/components/adsterra-ad";
 import { HeroVisual } from "@/components/hero-visual";
-import { siteConfig } from "@/lib/site-config";
+import { AuthorCard } from "@/components/author-card";
+import { siteConfig, authorProfile } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Free Online Einstein IQ Test | Logical Reasoning Quiz",
@@ -89,6 +90,34 @@ const faqSchema = {
   })),
 };
 
+// Article schema for the homepage educational content. Tells Google
+// who wrote the content (Jacob Moses, Content Specialist), which is
+// a key E-E-A-T signal.
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Free Online Einstein IQ Test | Logical Reasoning Quiz",
+  description:
+    "Take a free online IQ test with Einstein IQ Test. Practice logical reasoning, pattern recognition, problem solving, and analytical thinking through a quick cognitive skills quiz.",
+  url: siteConfig.url,
+  image: siteConfig.ogImage,
+  author: {
+    "@type": "Person",
+    name: authorProfile.name,
+    jobTitle: authorProfile.role,
+    url: `${siteConfig.url}/about`,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    logo: {
+      "@type": "ImageObject",
+      url: siteConfig.logo,
+    },
+  },
+};
+
 const measuredSkills = [
   {
     title: "Logical Reasoning",
@@ -131,6 +160,10 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
       {/* Hero */}
@@ -503,6 +536,23 @@ export default function HomePage() {
             </Link>
             .
           </p>
+        </div>
+      </section>
+
+      {/* About the author: E-E-A-T signal showing who creates the
+          educational content on this site. */}
+      <section className="py-12 sm:py-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mb-6 text-center">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              About the Author
+            </h2>
+            <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
+              The content on {siteConfig.name} is written and reviewed by a
+              dedicated content specialist.
+            </p>
+          </div>
+          <AuthorCard />
         </div>
       </section>
 
