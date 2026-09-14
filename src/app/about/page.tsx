@@ -67,10 +67,11 @@ export default function AboutPage() {
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
             {siteConfig.name} is a free online IQ style quiz built for people
             who want to practice reasoning in a clean, fast and honest
-            format. The site brings together 45 questions across three
-            categories (Math, Science, and History), with 15 questions in
-            each. You get instant feedback after every answer, a per-section
-            score, and a complete answer review at the end.
+            format. The site brings together 25 mixed reasoning questions
+            covering logical reasoning, pattern recognition, numerical
+            reasoning, verbal reasoning, spatial reasoning, problem solving,
+            sequences, and more. You get instant feedback after every answer,
+            an estimated IQ score, and a complete answer review at the end.
           </p>
         </div>
       </section>
@@ -147,9 +148,10 @@ export default function AboutPage() {
                 Take the IQ quiz
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Answer 45 questions across Math, Science, and History, see your
-                per-section score, and review every answer with a short
-                explanation.
+                Answer 25 mixed reasoning questions covering logical
+                reasoning, pattern recognition, numerical reasoning, and
+                more. See your estimated IQ score and review every answer
+                with a short explanation.
               </p>
             </li>
             <li className="rounded-2xl border border-border bg-card p-5 shadow-sm card-hover">
@@ -286,9 +288,9 @@ export default function AboutPage() {
               Ready to take the quiz?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-              Jump back to the home page and try the 45 question quiz. It
-              takes around 15 to 25 minutes and your answers stay in your
-              browser.
+              Jump back to the home page and try the 25 question Einstein IQ
+              Test. It takes around 8 to 15 minutes and your answers stay in
+              your browser.
             </p>
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button asChild size="lg">

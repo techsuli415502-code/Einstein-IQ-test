@@ -1,8 +1,9 @@
-export type QuizCategory = "Math" | "Science" | "History";
-
 export type QuizQuestion = {
   id: number;
-  category: QuizCategory;
+  // The reasoning category is kept for the author's reference and for
+  // potential future use, but it is NOT displayed to the user. The
+  // quiz is presented as one unified IQ test, not as separate sections.
+  category: ReasoningType;
   question: string;
   options: string[];
   /** index in options array of the correct answer */
@@ -10,518 +11,401 @@ export type QuizQuestion = {
   explanation: string;
 };
 
-// 45 questions across three categories: 15 Math, 15 Science, 15 History.
-// Each question has exactly 4 options and one objectively correct answer.
-// All facts have been verified against standard reference material.
+export type ReasoningType =
+  | "Logical Reasoning"
+  | "Pattern Recognition"
+  | "Numerical Reasoning"
+  | "Verbal Reasoning"
+  | "Spatial Reasoning"
+  | "Problem Solving"
+  | "Sequences"
+  | "Odd One Out"
+  | "Analogies"
+  | "Deductive Reasoning";
+
+// 25 IQ-style questions mixed across reasoning types.
+//
+// Difficulty curve (per the author's spec):
+//   Q1-5:   Easy to moderate
+//   Q6-15:  Moderate
+//   Q16-20: Moderate to challenging
+//   Q21-25: Challenging
+//
+// Every question has exactly 4 options and one objectively correct
+// answer. All facts and answers have been verified.
 export const quizQuestions: QuizQuestion[] = [
   // ============================================================
-  // MATH (15 questions)
+  // EASY TO MODERATE (Q1-5)
   // ============================================================
   {
     id: 1,
-    category: "Math",
-    question: "What is 7 multiplied by 8?",
-    options: ["54", "55", "56", "58"],
+    category: "Sequences",
+    question: "What number comes next in the sequence: 2, 4, 8, 16, ?",
+    options: ["18", "24", "32", "30"],
     correctIndex: 2,
-    explanation: "7 times 8 equals 56. A useful way to remember this is that the digits 7 and 8 are consecutive, and 5 and 6 are also consecutive in 56.",
+    explanation:
+      "Each number is multiplied by 2. 16 x 2 = 32. This is a simple doubling pattern.",
   },
   {
     id: 2,
-    category: "Math",
-    question: "What is the value of pi (π) rounded to two decimal places?",
-    options: ["3.12", "3.14", "3.16", "3.18"],
-    correctIndex: 1,
-    explanation: "Pi, the ratio of a circle's circumference to its diameter, is approximately 3.14159, which rounds to 3.14.",
+    category: "Odd One Out",
+    question: "Which word does not belong with the others?",
+    options: ["Sparrow", "Eagle", "Bat", "Hawk"],
+    correctIndex: 2,
+    explanation:
+      "Sparrow, eagle, and hawk are all birds. A bat is a mammal, so it is the odd one out.",
   },
   {
     id: 3,
-    category: "Math",
-    question: "What is 144 divided by 12?",
-    options: ["10", "11", "12", "14"],
-    correctIndex: 2,
-    explanation: "12 multiplied by 12 equals 144, so 144 divided by 12 equals 12.",
-  },
-  {
-    id: 4,
-    category: "Math",
+    category: "Numerical Reasoning",
     question: "What is 15% of 200?",
     options: ["20", "25", "30", "35"],
     correctIndex: 2,
-    explanation: "15% as a decimal is 0.15. 0.15 multiplied by 200 equals 30.",
+    explanation:
+      "15% as a decimal is 0.15. 0.15 x 200 = 30. A quick way: 10% of 200 is 20, and 5% is 10, so 15% is 30.",
+  },
+  {
+    id: 4,
+    category: "Analogies",
+    question: "Book is to reading as fork is to what?",
+    options: ["Drawing", "Eating", "Cooking", "Stirring"],
+    correctIndex: 1,
+    explanation:
+      "A book is a tool used for reading. A fork is a tool used for eating. The relationship is tool : its primary use.",
   },
   {
     id: 5,
-    category: "Math",
-    question: "What is the square root of 81?",
-    options: ["7", "8", "9", "11"],
-    correctIndex: 2,
-    explanation: "9 multiplied by 9 equals 81, so the square root of 81 is 9.",
-  },
-  {
-    id: 6,
-    category: "Math",
+    category: "Pattern Recognition",
     question:
-      "A triangle has two angles measuring 30 degrees and 60 degrees. What is the measure of the third angle?",
-    options: ["60 degrees", "70 degrees", "90 degrees", "100 degrees"],
+      "Which shape completes the pattern: circle, square, triangle, circle, square, ?",
+    options: ["Circle", "Square", "Triangle", "Pentagon"],
     correctIndex: 2,
     explanation:
-      "The interior angles of a triangle always add up to 180 degrees. 180 minus 30 minus 60 equals 90 degrees.",
+      "The sequence repeats every three shapes: circle, square, triangle. After the second square, the next shape is triangle.",
+  },
+
+  // ============================================================
+  // MODERATE (Q6-15)
+  // ============================================================
+  {
+    id: 6,
+    category: "Sequences",
+    question: "What number comes next: 1, 1, 2, 3, 5, 8, 13, ?",
+    options: ["18", "20", "21", "23"],
+    correctIndex: 2,
+    explanation:
+      "This is the Fibonacci sequence. Each number is the sum of the two before it: 8 + 13 = 21.",
   },
   {
     id: 7,
-    category: "Math",
-    question: "What is 2 raised to the power of 5 (2^5)?",
-    options: ["16", "25", "32", "64"],
+    category: "Logical Reasoning",
+    question:
+      "All roses are flowers. Some flowers fade quickly. Which statement must be true?",
+    options: [
+      "All roses fade quickly.",
+      "No roses fade quickly.",
+      "Some roses might fade quickly.",
+      "All flowers are roses.",
+    ],
     correctIndex: 2,
     explanation:
-      "2 raised to the 5th power means 2 multiplied by itself 5 times: 2 x 2 x 2 x 2 x 2 = 32.",
+      "We only know that some flowers fade quickly. Roses are flowers, so some roses might be among those that fade quickly, but we cannot be certain.",
   },
   {
     id: 8,
-    category: "Math",
-    question: "What is 5 factorial (5!)?",
-    options: ["20", "60", "100", "120"],
-    correctIndex: 3,
+    category: "Numerical Reasoning",
+    question: "What is the next number in the sequence: 3, 6, 11, 18, 27, ?",
+    options: ["36", "38", "40", "34"],
+    correctIndex: 1,
     explanation:
-      "5 factorial means the product of all positive integers from 1 to 5: 1 x 2 x 3 x 4 x 5 = 120.",
+      "The differences increase by 2 each time: +3, +5, +7, +9. The next difference is +11, so 27 + 11 = 38.",
   },
   {
     id: 9,
-    category: "Math",
-    question: "What is the next prime number after 7?",
-    options: ["9", "10", "11", "13"],
-    correctIndex: 2,
+    category: "Verbal Reasoning",
+    question:
+      "Choose the word that is most similar in meaning to 'brief':",
+    options: ["Long", "Short", "Heavy", "Bright"],
+    correctIndex: 1,
     explanation:
-      "A prime number has only two factors: 1 and itself. 9 is divisible by 3, 10 is divisible by 2 and 5, but 11 has only 1 and 11 as factors.",
+      "Brief means short in time or length, so 'short' is the closest synonym.",
   },
   {
     id: 10,
-    category: "Math",
-    question: "What is the least common multiple (LCM) of 4 and 6?",
-    options: ["12", "16", "20", "24"],
-    correctIndex: 0,
+    category: "Pattern Recognition",
+    question: "Which letter completes the pattern: A, C, E, G, ?",
+    options: ["H", "I", "J", "K"],
+    correctIndex: 1,
     explanation:
-      "The LCM is the smallest number that both 4 and 6 divide into evenly. Multiples of 4: 4, 8, 12, 16. Multiples of 6: 6, 12, 18. The smallest common one is 12.",
+      "Each letter skips one letter in the alphabet. A, (skip B), C, (skip D), E, (skip F), G, (skip H), so the next is I.",
   },
   {
     id: 11,
-    category: "Math",
-    question: "What is 0.25 written as a fraction in simplest form?",
-    options: ["1/3", "1/4", "1/5", "2/5"],
+    category: "Problem Solving",
+    question:
+      "If a shirt costs $40 after a 20% discount, what was the original price?",
+    options: ["$48", "$50", "$60", "$52"],
     correctIndex: 1,
     explanation:
-      "0.25 means 25 hundredths, which is 25/100. Dividing both the numerator and denominator by 25 gives 1/4.",
+      "The discounted price is 80% of the original. $40 / 0.80 = $50. You can also check: 20% off $50 is $10, so $50 - $10 = $40.",
   },
   {
     id: 12,
-    category: "Math",
-    question:
-      "What is the sum of the interior angles of any triangle (in degrees)?",
-    options: ["90 degrees", "180 degrees", "270 degrees", "360 degrees"],
-    correctIndex: 1,
+    category: "Odd One Out",
+    question: "Which number does not belong: 3, 5, 7, 9, 11?",
+    options: ["3", "5", "9", "11"],
+    correctIndex: 2,
     explanation:
-      "The interior angles of any triangle, regardless of its shape, always add up to 180 degrees.",
+      "3, 5, 7, and 11 are all prime numbers (divisible only by 1 and themselves). 9 is divisible by 3, so it is not prime.",
   },
   {
     id: 13,
-    category: "Math",
-    question: "If x + 5 = 12, what is the value of x?",
-    options: ["5", "6", "7", "8"],
-    correctIndex: 2,
+    category: "Spatial Reasoning",
+    question:
+      "A square has how many lines of symmetry?",
+    options: ["2", "4", "6", "8"],
+    correctIndex: 1,
     explanation:
-      "To solve for x, subtract 5 from both sides of the equation. 12 minus 5 equals 7, so x = 7.",
+      "A square has 4 lines of symmetry: 2 diagonals and 2 lines through the midpoints of opposite sides.",
   },
   {
     id: 14,
-    category: "Math",
-    question: "What is 9 squared (9²)?",
-    options: ["72", "81", "90", "99"],
+    category: "Deductive Reasoning",
+    question:
+      "Tom is older than Jerry. Jerry is older than Spike. Which statement must be true?",
+    options: [
+      "Spike is older than Tom.",
+      "Tom is older than Spike.",
+      "Tom and Spike are the same age.",
+      "Cannot be determined.",
+    ],
     correctIndex: 1,
-    explanation: "9 squared means 9 multiplied by 9, which equals 81.",
+    explanation:
+      "If Tom is older than Jerry, and Jerry is older than Spike, then by transitive reasoning Tom must be older than Spike.",
   },
   {
     id: 15,
-    category: "Math",
-    question: "What is 1000 minus 567?",
-    options: ["423", "433", "443", "453"],
-    correctIndex: 1,
+    category: "Sequences",
+    question: "Find the missing number: 100, 50, 25, 12.5, ?",
+    options: ["6.25", "6.5", "5.25", "7.25"],
+    correctIndex: 0,
     explanation:
-      "Subtracting step by step: 1000 minus 500 equals 500, minus 60 equals 440, minus 7 equals 433.",
+      "Each number is divided by 2. 12.5 / 2 = 6.25.",
   },
 
   // ============================================================
-  // SCIENCE (15 questions)
+  // MODERATE TO CHALLENGING (Q16-20)
   // ============================================================
   {
     id: 16,
-    category: "Science",
-    question: "Which planet in our solar system is known as the Red Planet?",
-    options: ["Venus", "Mars", "Jupiter", "Saturn"],
+    category: "Numerical Reasoning",
+    question:
+      "What is the next number in the sequence: 2, 6, 12, 20, 30, ?",
+    options: ["40", "42", "44", "36"],
     correctIndex: 1,
     explanation:
-      "Mars appears reddish because of iron oxide (rust) on its surface, which is why it is called the Red Planet.",
+      "The differences increase by 2 each time: +4, +6, +8, +10. The next difference is +12, so 30 + 12 = 42. (Also: each term is n x (n+1), so the 6th term is 6 x 7 = 42.)",
   },
   {
     id: 17,
-    category: "Science",
-    question: "What is the chemical formula for water?",
-    options: ["CO2", "H2O", "O2", "NaCl"],
+    category: "Problem Solving",
+    question:
+      "A clock shows 3:15. What is the angle between the hour hand and the minute hand?",
+    options: ["0 degrees", "7.5 degrees", "15 degrees", "22.5 degrees"],
     correctIndex: 1,
     explanation:
-      "A water molecule is made of two hydrogen atoms and one oxygen atom, giving it the formula H2O.",
+      "At 3:15, the minute hand is at 90 degrees (pointing at 3). The hour hand has moved a quarter of the way from 3 to 4, which is 7.5 degrees past 90 degrees. The angle between them is 7.5 degrees.",
   },
   {
     id: 18,
-    category: "Science",
-    question: "Which organelle is known as the 'powerhouse of the cell'?",
-    options: ["Nucleus", "Ribosome", "Mitochondria", "Chloroplast"],
+    category: "Logical Reasoning",
+    question:
+      "If all cats are animals and some animals are wild, which option is necessarily true?",
+    options: [
+      "All cats are wild.",
+      "Some cats are wild.",
+      "Some cats may or may not be wild.",
+      "No cats are wild.",
+    ],
     correctIndex: 2,
     explanation:
-      "Mitochondria generate most of the cell's supply of ATP, which is the chemical energy that powers cellular processes.",
+      "The statements do not tell us whether any cats fall inside the wild animal group. We can only say that some cats may or may not be wild.",
   },
   {
     id: 19,
-    category: "Science",
+    category: "Verbal Reasoning",
     question:
-      "Which gas do plants primarily absorb from the atmosphere during photosynthesis?",
-    options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
+      "Which word is the odd one out: rapidly, swiftly, slowly, quickly?",
+    options: ["Rapidly", "Swiftly", "Slowly", "Quickly"],
     correctIndex: 2,
     explanation:
-      "Plants take in carbon dioxide (CO2) from the air and use it, along with water and sunlight, to produce glucose and oxygen.",
+      "Rapidly, swiftly, and quickly all describe fast movement. Slowly describes the opposite, so it is the odd one out.",
   },
   {
     id: 20,
-    category: "Science",
+    category: "Pattern Recognition",
     question:
-      "What is the approximate speed of light in a vacuum, in kilometers per second?",
-    options: ["30,000 km/s", "150,000 km/s", "300,000 km/s", "1,000,000 km/s"],
-    correctIndex: 2,
-    explanation:
-      "Light in a vacuum travels at about 299,792 kilometers per second, which is commonly rounded to 300,000 km/s.",
-  },
-  {
-    id: 21,
-    category: "Science",
-    question: "What is the largest planet in our solar system?",
-    options: ["Saturn", "Jupiter", "Neptune", "Uranus"],
+      "Which number completes the pattern: 1, 4, 9, 16, 25, ?",
+    options: ["30", "36", "49", "35"],
     correctIndex: 1,
     explanation:
-      "Jupiter is the largest planet in our solar system, with a mass more than twice that of all other planets combined.",
+      "These are perfect squares: 1 squared, 2 squared, 3 squared, 4 squared, 5 squared. The next is 6 squared = 36.",
+  },
+
+  // ============================================================
+  // CHALLENGING (Q21-25)
+  // ============================================================
+  {
+    id: 21,
+    category: "Sequences",
+    question:
+      "What is the next number in the sequence: 1, 4, 27, 256, ?",
+    options: ["3125", "625", "1024", "1296"],
+    correctIndex: 0,
+    explanation:
+      "Each number is n raised to the power of n: 1^1 = 1, 2^2 = 4, 3^3 = 27, 4^4 = 256. The next is 5^5 = 3125.",
   },
   {
     id: 22,
-    category: "Science",
-    question: "What is the chemical symbol for gold?",
-    options: ["Gd", "Go", "Au", "Ag"],
-    correctIndex: 2,
+    category: "Deductive Reasoning",
+    question:
+      "Five friends sit in a row. Alex is to the left of Beth but to the right of Cara. Dana is to the right of Beth. Evan is between Cara and Alex. Who is sitting in the middle?",
+    options: ["Cara", "Alex", "Beth", "Evan"],
+    correctIndex: 3,
     explanation:
-      "The symbol for gold is Au, from the Latin word 'aurum'. Silver is Ag, from 'argentum'.",
+      "From left to right: Cara, Evan, Alex, Beth, Dana. Working through the clues: Cara is leftmost, Evan is between Cara and Alex, Alex is left of Beth, and Dana is right of Beth. Evan sits in the middle (third position).",
   },
   {
     id: 23,
-    category: "Science",
-    question: "How many bones are in the adult human body?",
-    options: ["186", "206", "226", "246"],
-    correctIndex: 1,
+    category: "Numerical Reasoning",
+    question:
+      "What is the next number in the sequence: 1, 2, 6, 24, 120, ?",
+    options: ["240", "360", "600", "720"],
+    correctIndex: 3,
     explanation:
-      "The adult human skeleton has 206 bones. Babies are born with about 270 bones, but many fuse together as they grow.",
+      "Each number is multiplied by an increasing integer: x2, x3, x4, x5. The next is 120 x 6 = 720. These are factorials: 1!, 2!, 3!, 4!, 5!, 6!.",
   },
   {
     id: 24,
-    category: "Science",
+    category: "Problem Solving",
     question:
-      "What is the most abundant gas in Earth's atmosphere (by percentage)?",
-    options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Argon"],
+      "A man buys a watch for $120 and sells it for $150. What is his profit percentage?",
+    options: ["20 percent", "25 percent", "30 percent", "15 percent"],
     correctIndex: 1,
     explanation:
-      "Nitrogen makes up about 78% of Earth's atmosphere. Oxygen is second at about 21%.",
+      "Profit is $30 on a cost of $120. $30 / $120 = 0.25 = 25 percent.",
   },
   {
     id: 25,
-    category: "Science",
-    question: "At what temperature does water freeze at sea level (in Celsius)?",
-    options: ["-10 degrees C", "0 degrees C", "32 degrees C", "100 degrees C"],
-    correctIndex: 1,
-    explanation:
-      "On the Celsius scale, water freezes at 0 degrees and boils at 100 degrees at sea level.",
-  },
-  {
-    id: 26,
-    category: "Science",
-    question: "Which organ in the human body pumps blood throughout the body?",
-    options: ["Lungs", "Liver", "Heart", "Kidneys"],
-    correctIndex: 2,
-    explanation:
-      "The heart is a muscular organ that pumps blood through the circulatory system, delivering oxygen and nutrients to the body.",
-  },
-  {
-    id: 27,
-    category: "Science",
-    question: "What is the smallest basic unit of life?",
-    options: ["Atom", "Molecule", "Cell", "Tissue"],
-    correctIndex: 2,
-    explanation:
-      "The cell is the smallest structural and functional unit of all living organisms. Atoms and molecules are smaller but are not alive.",
-  },
-  {
-    id: 28,
-    category: "Science",
+    category: "Logical Reasoning",
     question:
-      "What natural force keeps objects on the ground and gives them weight?",
-    options: ["Magnetism", "Friction", "Gravity", "Tension"],
-    correctIndex: 2,
-    explanation:
-      "Gravity is the force that attracts objects with mass toward each other. Earth's gravity keeps us on the ground.",
-  },
-  {
-    id: 29,
-    category: "Science",
-    question: "What is the chemical symbol for the element oxygen?",
-    options: ["Ox", "O", "Oc", "Og"],
+      "In a certain code, CAT is written as 24. Using the same rule, how is DOG written? (A = 1, B = 2, C = 3, and so on.)",
+    options: ["26", "27", "29", "30"],
     correctIndex: 1,
     explanation:
-      "The chemical symbol for oxygen is O. Most single-element symbols use one or two letters from the element's name.",
-  },
-  {
-    id: 30,
-    category: "Science",
-    question: "What is the closest star to Earth?",
-    options: ["The Moon", "The Sun", "Proxima Centauri", "Sirius"],
-    correctIndex: 1,
-    explanation:
-      "The Sun is the closest star to Earth, at about 150 million kilometers away. Proxima Centauri is the closest star outside our solar system.",
-  },
-
-  // ============================================================
-  // HISTORY (15 questions)
-  // ============================================================
-  {
-    id: 31,
-    category: "History",
-    question: "In what year did World War II end?",
-    options: ["1943", "1944", "1945", "1946"],
-    correctIndex: 2,
-    explanation:
-      "World War II ended in 1945, with Germany surrendering in May and Japan surrendering in September after the atomic bombings.",
-  },
-  {
-    id: 32,
-    category: "History",
-    question: "Who was the first President of the United States?",
-    options: [
-      "Thomas Jefferson",
-      "John Adams",
-      "George Washington",
-      "Benjamin Franklin",
-    ],
-    correctIndex: 2,
-    explanation:
-      "George Washington served as the first President of the United States from 1789 to 1797.",
-  },
-  {
-    id: 33,
-    category: "History",
-    question: "Who painted the Mona Lisa?",
-    options: [
-      "Michelangelo",
-      "Raphael",
-      "Leonardo da Vinci",
-      "Pablo Picasso",
-    ],
-    correctIndex: 2,
-    explanation:
-      "Leonardo da Vinci painted the Mona Lisa in the early 16th century. It is now displayed at the Louvre Museum in Paris.",
-  },
-  {
-    id: 34,
-    category: "History",
-    question: "In what year did Christopher Columbus first reach the Americas?",
-    options: ["1488", "1492", "1500", "1510"],
-    correctIndex: 1,
-    explanation:
-      "Christopher Columbus made his first voyage across the Atlantic in 1492, funded by the Spanish monarchy.",
-  },
-  {
-    id: 35,
-    category: "History",
-    question: "In what year did the French Revolution begin?",
-    options: ["1776", "1789", "1799", "1804"],
-    correctIndex: 1,
-    explanation:
-      "The French Revolution began in 1789 with the storming of the Bastille on July 14, a date still celebrated as France's national day.",
-  },
-  {
-    id: 36,
-    category: "History",
-    question: "Who was the first Emperor of ancient Rome?",
-    options: ["Julius Caesar", "Nero", "Augustus", "Caligula"],
-    correctIndex: 2,
-    explanation:
-      "Augustus (born Octavian) became the first Roman Emperor in 27 BC, marking the start of the Roman Empire.",
-  },
-  {
-    id: 37,
-    category: "History",
-    question:
-      "What was the name of the famous ship that sank in 1912 after hitting an iceberg?",
-    options: ["Lusitania", "Britannic", "Titanic", "Olympic"],
-    correctIndex: 2,
-    explanation:
-      "The RMS Titanic sank on its maiden voyage in April 1912 after striking an iceberg in the North Atlantic, killing more than 1,500 people.",
-  },
-  {
-    id: 38,
-    category: "History",
-    question: "In what year did the Berlin Wall fall?",
-    options: ["1987", "1989", "1991", "1993"],
-    correctIndex: 1,
-    explanation:
-      "The Berlin Wall, which had divided East and West Berlin since 1961, fell on November 9, 1989, marking a key moment in the end of the Cold War.",
-  },
-  {
-    id: 39,
-    category: "History",
-    question: "Who wrote the play 'Romeo and Juliet'?",
-    options: [
-      "Charles Dickens",
-      "William Shakespeare",
-      "Mark Twain",
-      "Jane Austen",
-    ],
-    correctIndex: 1,
-    explanation:
-      "William Shakespeare wrote 'Romeo and Juliet' in the late 16th century. It is one of his most famous tragedies.",
-  },
-  {
-    id: 40,
-    category: "History",
-    question:
-      "What was the name of the first manned mission to land on the Moon?",
-    options: ["Apollo 10", "Apollo 11", "Apollo 12", "Apollo 13"],
-    correctIndex: 1,
-    explanation:
-      "Apollo 11 landed on the Moon on July 20, 1969. Astronauts Neil Armstrong and Buzz Aldrin became the first humans to walk on the lunar surface.",
-  },
-  {
-    id: 41,
-    category: "History",
-    question:
-      "Who was the British Prime Minister during most of World War II?",
-    options: [
-      "Neville Chamberlain",
-      "Winston Churchill",
-      "Clement Attlee",
-      "Anthony Eden",
-    ],
-    correctIndex: 1,
-    explanation:
-      "Winston Churchill served as Prime Minister of the United Kingdom from 1940 to 1945, leading the country through most of World War II.",
-  },
-  {
-    id: 42,
-    category: "History",
-    question:
-      "In what year did the United States declare its independence?",
-    options: ["1774", "1776", "1783", "1789"],
-    correctIndex: 1,
-    explanation:
-      "The United States Declaration of Independence was adopted on July 4, 1776, marking the colonies' separation from Great Britain.",
-  },
-  {
-    id: 43,
-    category: "History",
-    question:
-      "Who is known as the 'Father of Modern Physics' for developing the theory of relativity?",
-    options: [
-      "Isaac Newton",
-      "Niels Bohr",
-      "Albert Einstein",
-      "Galileo Galilei",
-    ],
-    correctIndex: 2,
-    explanation:
-      "Albert Einstein developed the theory of relativity, which transformed our understanding of space, time, and gravity. He published the general theory in 1915.",
-  },
-  {
-    id: 44,
-    category: "History",
-    question:
-      "The Great Pyramid of Giza was built as a tomb for which Egyptian pharaoh?",
-    options: ["Tutankhamun", "Khufu", "Ramses II", "Cleopatra"],
-    correctIndex: 1,
-    explanation:
-      "The Great Pyramid of Giza was built around 2560 BC as the tomb of Pharaoh Khufu (also known by his Greek name, Cheops).",
-  },
-  {
-    id: 45,
-    category: "History",
-    question:
-      "Which ancient civilization is credited with inventing paper as we know it?",
-    options: ["Egypt", "Greece", "China", "Rome"],
-    correctIndex: 2,
-    explanation:
-      "Paper was invented in China around 105 AD by Cai Lun, an official in the Han imperial court. The technique spread to the rest of the world much later.",
+      "The rule sums the letter positions. C = 3, A = 1, T = 20, so CAT = 3 + 1 + 20 = 24. For DOG: D = 4, O = 15, G = 7, so 4 + 15 + 7 = 26.",
   },
 ];
 
-// Categories in the order they appear in the quiz.
-export const quizCategories: QuizCategory[] = ["Math", "Science", "History"];
+// ============================================================
+// IQ score calculation
+// ============================================================
+//
+// The estimated IQ score is calculated from the user's raw score
+// out of 25, mapped onto a typical IQ scale (mean 100, standard
+// deviation 15). The mapping below is designed to feel reasonable
+// for a general online audience without making clinical claims:
+//
+//   0-4 correct   -> IQ 70-84  (well below average)
+//   5-9 correct   -> IQ 85-94  (below average)
+//   10-14 correct -> IQ 95-109 (average)
+//   15-19 correct -> IQ 110-119 (above average)
+//   20-22 correct -> IQ 120-129 (superior)
+//   23-25 correct -> IQ 130+   (very superior)
+//
+// This is an informal estimate for entertainment and self-assessment
+// only. It is NOT a clinically validated IQ score.
 
-// Helper: how many questions are in each category.
-export function getQuestionsByCategory(
-  category: QuizCategory
-): QuizQuestion[] {
-  return quizQuestions.filter((q) => q.category === category);
-}
+export type IqBand = {
+  min: number; // minimum raw score (inclusive)
+  max: number; // maximum raw score (inclusive)
+  iqMin: number;
+  iqMax: number;
+  label: string;
+  description: string;
+};
 
-// Helper: total count per category (used in the intro card and result screen).
-export function getQuestionCount(category: QuizCategory): number {
-  return getQuestionsByCategory(category).length;
-}
-
-// Score bands for the overall result interpretation.
-export const scoreBands = [
+export const iqBands: IqBand[] = [
   {
     min: 0,
-    max: 14,
-    label: "Keep practicing",
+    max: 4,
+    iqMin: 70,
+    iqMax: 84,
+    label: "Well below average",
     description:
-      "A great starting point. Review the explanations for each question, then try again to build your general knowledge.",
+      "This is just a starting point. Online IQ quizzes reward practice, so try again after reviewing the explanations and you will likely see your score improve.",
+  },
+  {
+    min: 5,
+    max: 9,
+    iqMin: 85,
+    iqMax: 94,
+    label: "Below average",
+    description:
+      "You answered some questions correctly. Reviewing the explanations, especially for the pattern and sequence questions, will help you spot the rules faster next time.",
+  },
+  {
+    min: 10,
+    max: 14,
+    iqMin: 95,
+    iqMax: 109,
+    label: "Average",
+    description:
+      "A solid result. You handled a mix of reasoning types well, including some of the trickier sequence and logic questions.",
   },
   {
     min: 15,
-    max: 24,
-    label: "Developing",
+    max: 19,
+    iqMin: 110,
+    iqMax: 119,
+    label: "Above average",
     description:
-      "You are building a solid foundation. Focus on the categories where you scored lowest and try again soon.",
+      "Strong work. You consistently spotted patterns and worked through the logic questions carefully, including several of the challenging ones.",
   },
   {
-    min: 25,
-    max: 34,
-    label: "Strong",
+    min: 20,
+    max: 22,
+    iqMin: 120,
+    iqMax: 129,
+    label: "Superior",
     description:
-      "Good work. You answered most questions correctly across all three categories. Keep going to push your score higher.",
+      "Excellent result. You answered most questions correctly, including the challenging sequence and deduction items near the end of the test.",
   },
   {
-    min: 35,
-    max: 41,
-    label: "Very strong",
+    min: 23,
+    max: 25,
+    iqMin: 130,
+    iqMax: 145,
+    label: "Very superior",
     description:
-      "Excellent work. You consistently answered correctly across Math, Science, and History. A high level of general knowledge.",
-  },
-  {
-    min: 42,
-    max: 45,
-    label: "Excellent",
-    description:
-      "Outstanding. You answered nearly every question correctly. A remarkable level of general knowledge across all categories.",
+      "Outstanding. You answered nearly every question correctly, including the most challenging reasoning items. A very strong performance across all question types.",
   },
 ];
 
-// Helper used by the result card.
-export function getScoreBand(score: number) {
+// Returns the IQ band for a given raw score (out of 25).
+export function getIqBand(score: number): IqBand {
   return (
-    scoreBands.find((band) => score >= band.min && score <= band.max) ??
-    scoreBands[scoreBands.length - 1]
+    iqBands.find((band) => score >= band.min && score <= band.max) ??
+    iqBands[iqBands.length - 1]
   );
+}
+
+// Returns an estimated IQ score (single number) for display.
+// Uses a linear interpolation within the band so that higher raw
+// scores within a band produce slightly higher IQ estimates.
+export function getEstimatedIq(score: number): number {
+  const band = getIqBand(score);
+  if (band.max === band.min) return band.iqMax;
+  const fraction = (score - band.min) / (band.max - band.min);
+  return Math.round(band.iqMin + fraction * (band.iqMax - band.iqMin));
 }

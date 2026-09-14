@@ -44,14 +44,17 @@ export const siteConfig = {
 // Author profile used across the site for E-E-A-T signals.
 // Jacob Moses is presented only as a Content Specialist. He is not
 // claimed to be a licensed psychologist, doctor, scientist, researcher,
-// or any other credentialed professional. The bio is honest and avoids
-// unsupported credentials, fake reviews, or exaggerated expertise.
+// or any other credentialed professional. The bio is written in first
+// person ("I", "my", "me") so it reads naturally on the author card
+// and avoids unsupported credentials, fake reviews, or exaggerated
+// expertise.
 export const authorProfile = {
   name: "Jacob Moses",
   role: "Content Specialist",
-  bio: "Jacob Moses is a Content Specialist focused on creating clear, useful, and engaging online content. He researches topics carefully and presents information in a simple, reader-friendly way, with a focus on accuracy, clarity, and a helpful user experience. At Einstein IQ Test, Jacob works on the quiz content, educational sections, and help articles, making sure each piece is easy to read and grounded in reliable general knowledge.",
+  // First-person bio (used on the author card and About page).
+  bio: "Hi, I'm Jacob Moses, a Content Specialist focused on creating clear, useful, and engaging online content. I enjoy researching topics, organizing information, and turning complex ideas into simple, easy-to-understand content. My goal is to give readers helpful information and a better experience every time they visit this site. I work on the quiz questions, educational sections, and help articles here at Einstein IQ Test, and I review each piece carefully to make sure it is accurate and easy to follow.",
   shortBio:
-    "Jacob Moses is a Content Specialist focused on creating clear, useful, and engaging online content. He researches topics carefully and presents information in a simple, reader-friendly way.",
+    "Hi, I'm Jacob Moses, a Content Specialist focused on creating clear, useful, and engaging online content. I research topics carefully and present information in a simple, reader-friendly way.",
   // SVG initials avatar (no real photo, no fake face). Uses the brand
   // emerald color so the avatar feels native to the site design.
   avatar: "/author-jacob-moses.svg",

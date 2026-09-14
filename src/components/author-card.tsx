@@ -63,7 +63,7 @@ export function AuthorCard({
                 aria-hidden="true"
               />
               <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Written by
+                About the author
               </span>
             </div>
             <h3 className="text-base font-semibold text-foreground sm:text-lg">

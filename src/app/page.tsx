@@ -24,7 +24,7 @@ import { siteConfig, authorProfile } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Free Online Einstein IQ Test | Logical Reasoning Quiz",
   description:
-    "Take the Einstein IQ Test free online. Practice 45 general knowledge questions across Math, Science, and History with instant feedback after each answer. Free, no sign up.",
+    "Take the Einstein IQ Test free online. 25 mixed reasoning questions covering logical reasoning, pattern recognition, numerical reasoning, verbal reasoning, problem solving, and more. Instant feedback and an estimated IQ score. Free, no sign up.",
   alternates: {
     canonical: "/",
   },
@@ -53,15 +53,19 @@ const faqs = [
   },
   {
     q: "How many questions are in the test?",
-    a: "The quiz has 45 questions split evenly across three sections: 15 Math, 15 Science, and 15 History. Each question has four multiple choice options and exactly one correct answer.",
+    a: "The Einstein IQ Test has 25 mixed reasoning questions covering logical reasoning, pattern recognition, numerical reasoning, verbal reasoning, spatial reasoning, problem solving, sequences, odd-one-out, analogies, and deductive reasoning. Each question has four multiple choice options and exactly one correct answer.",
   },
   {
     q: "How long does the test take?",
-    a: "Most people finish in around 15 to 25 minutes. There is no timer, so you can read each question carefully and take as long as you need. Going at a steady pace usually produces a more accurate result than rushing.",
+    a: "Most people finish in around 8 to 15 minutes. There is no timer, so you can read each question carefully and take as long as you need. Going at a steady pace usually produces a more accurate result than rushing.",
   },
   {
     q: "Do I get feedback after each answer?",
     a: "Yes. The moment you select an answer, the quiz shows whether your choice was correct or incorrect, reveals the correct answer if you got it wrong, and gives a short explanation so you understand why. You can then move on to the next question at your own pace.",
+  },
+  {
+    q: "Does the quiz give me an IQ score?",
+    a: "Yes. At the end of the test you see your raw score out of 25, your accuracy percentage, and an estimated IQ score with a label such as 'Average' or 'Above average'. This estimate is for entertainment and general self-assessment only. It is not a clinically validated IQ score and should not be used as a professional psychological assessment.",
   },
   {
     q: "Can I retake the IQ test?",
@@ -192,9 +196,9 @@ export default function HomePage() {
                 Welcome to {siteConfig.name}. Take a free online IQ quiz
                 that checks your logical reasoning, pattern recognition,
                 problem solving, analytical thinking, number reasoning and
-                cognitive skills. You get 45 questions across Math, Science,
-                and History, with instant feedback after each answer and a
-                clear score breakdown at the end. No sign up needed.
+                cognitive skills. You get 25 mixed reasoning questions, with
+                instant feedback after each answer and an estimated IQ score
+                at the end. No sign up needed.
               </p>
 
               <div className="hero-fade-up hero-fade-up-4 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -240,10 +244,12 @@ export default function HomePage() {
               Take the Einstein IQ Test
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
-              Answer 45 questions across Math, Science, and History with
-              instant feedback after each answer. Get a per-section score
-              and a complete answer review at the end. The quiz runs in your
-              browser and your answers are not stored on a server.
+              Answer 25 mixed reasoning questions covering logical
+              reasoning, pattern recognition, numerical reasoning, verbal
+              reasoning, problem solving, and more. Get instant feedback
+              after each answer and an estimated IQ score at the end. The
+              quiz runs in your browser and your answers are not stored on
+              a server.
             </p>
           </div>
           <IQQuiz />

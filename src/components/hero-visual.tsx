@@ -16,8 +16,8 @@ import { Brain, ListChecks, Clock, ShieldCheck } from "lucide-react";
  */
 
 const stats = [
-  { icon: ListChecks, value: "45", label: "Questions" },
-  { icon: Clock, value: "~20 min", label: "Average" },
+  { icon: ListChecks, value: "25", label: "Questions" },
+  { icon: Clock, value: "~10 min", label: "Average" },
   { icon: ShieldCheck, value: "Free", label: "No sign up" },
 ];
 
