@@ -71,6 +71,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: `${siteConfig.name} free online IQ quiz`,
+        type: "image/png",
       },
     ],
   },
@@ -88,10 +89,12 @@ export const metadata: Metadata = {
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
     ],
     shortcut: [
       { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
     ],
     apple: [
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
@@ -108,6 +111,13 @@ export const metadata: Metadata = {
         sizes: "512x512",
         type: "image/png",
         rel: "icon",
+      },
+      // Microsoft tile icon for Windows Start menu pin.
+      {
+        url: "/mstile-144x144.png",
+        sizes: "144x144",
+        type: "image/png",
+        rel: "msapplication-TileImage",
       },
     ],
   },
@@ -137,6 +147,44 @@ const websiteSchema = {
   },
 };
 
+// Organization schema with logo. Google uses this to display a logo
+// next to the URL in search results and in the knowledge panel.
+// See: https://developers.google.com/search/docs/appearance/structured-data/logo
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  logo: siteConfig.logo,
+  image: siteConfig.logo,
+  description: siteConfig.description,
+  email: siteConfig.contactEmail,
+  sameAs: [],
+};
+
+// WebPage schema for the homepage with publisher reference.
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Free Online Einstein IQ Test | Logical Reasoning Quiz",
+  url: siteConfig.url,
+  description: siteConfig.description,
+  isPartOf: {
+    "@type": "WebSite",
+    name: siteConfig.name,
+    url: siteConfig.url,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    logo: {
+      "@type": "ImageObject",
+      url: siteConfig.logo,
+    },
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -161,9 +209,20 @@ export default function RootLayout({
         {/* Sticky bottom anchor ad. Fixed to viewport, dismissible per session. */}
         <AnchorAd />
         <Toaster />
+        {/* Structured data for Google search: WebSite + Organization + WebPage.
+            The Organization schema with a logo field is what tells Google
+            which image to show as the site's logo in search results. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
         />
       </body>
     </html>

@@ -21,7 +21,15 @@ export const siteConfig = {
   tagline: "Test Your IQ Online",
   description:
     "Take a free online IQ test with Einstein IQ Test. Practice logical reasoning, pattern recognition, problem solving, and analytical thinking through a quick cognitive skills quiz.",
-  ogImage: "https://einsteiniqtest.vercel.app/og-image.svg",
+  // PNG OG image (1200x630) for Google search features and social sharing.
+  // SVG is supported by some platforms but PNG is universally accepted.
+  ogImage: "https://einsteiniqtest.vercel.app/og-image.png",
+  // Square logo used in Organization structured data (schema.org).
+  // Google uses this for the small logo next to the URL in search results
+  // and for the knowledge panel. Must be a PNG/JPG, at least 112x112
+  // (Google recommends 512x512).
+  logo: "https://einsteiniqtest.vercel.app/android-chrome-512x512.png",
+  logoSvg: "https://einsteiniqtest.vercel.app/logo.svg",
   twitter: "@einsteiniqtest",
   author: "Einstein IQ Test Team",
   contactEmail: "techsuli415502@gmail.com",
