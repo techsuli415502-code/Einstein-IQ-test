@@ -27,8 +27,9 @@ export const siteConfig = {
   // Square logo used in Organization structured data (schema.org).
   // Google uses this for the small logo next to the URL in search results
   // and for the knowledge panel. Must be a PNG/JPG, at least 112x112
-  // (Google recommends 512x512).
-  logo: "https://einsteiniqtest.vercel.app/android-chrome-512x512.png",
+  // (Google recommends 512x512). We use logo.png (512x512) which has
+  // the most detail (gauge ring, neural network, brain, amber spark).
+  logo: "https://einsteiniqtest.vercel.app/logo.png",
   logoSvg: "https://einsteiniqtest.vercel.app/logo.svg",
   twitter: "@einsteiniqtest",
   author: "Einstein IQ Test Team",

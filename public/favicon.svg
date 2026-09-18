@@ -1,67 +1,103 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="bgGrad" x1="0" y1="0" x2="0.6" y2="1">
+    <!-- Deep emerald gradient background -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0.7" y2="1">
       <stop offset="0%" stop-color="#0F766E"/>
-      <stop offset="100%" stop-color="#0A4A45"/>
+      <stop offset="55%" stop-color="#0B5D57"/>
+      <stop offset="100%" stop-color="#083832"/>
     </linearGradient>
+    <!-- Brain gradient (white to soft mint) -->
     <linearGradient id="brainGrad" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="#E6F4F1"/>
+      <stop offset="100%" stop-color="#D1FAE5"/>
     </linearGradient>
-    <radialGradient id="sparkGrad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#FCD34D"/>
+    <!-- Amber spark gradient -->
+    <radialGradient id="sparkGrad" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="45%" stop-color="#FCD34D"/>
       <stop offset="100%" stop-color="#F59E0B"/>
+    </radialGradient>
+    <!-- Soft glow behind the brain -->
+    <radialGradient id="brainHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5EEAD4" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#5EEAD4" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#5EEAD4" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
   <!-- Background: rounded square with deep emerald gradient -->
   <rect width="64" height="64" rx="14" fill="url(#bgGrad)"/>
 
-  <!-- Subtle inner shadow / highlight for premium depth -->
-  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="white" stroke-opacity="0.08"/>
+  <!-- Subtle top highlight for premium depth -->
+  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="white" stroke-opacity="0.1"/>
 
-  <!-- Brain silhouette: simplified, recognizable at small sizes -->
+  <!-- Soft halo behind the brain (makes it pop at small sizes) -->
+  <circle cx="32" cy="32" r="22" fill="url(#brainHalo)"/>
+
+  <!-- Neural connection lines (animated feel, but static) -->
+  <g stroke="#5EEAD4" stroke-width="1.1" stroke-linecap="round" opacity="0.55" fill="none">
+    <path d="M 22 26 Q 27 23 32 27"/>
+    <path d="M 32 27 Q 37 23 42 26"/>
+    <path d="M 22 38 Q 27 35 32 38"/>
+    <path d="M 32 38 Q 37 35 42 38"/>
+    <path d="M 32 27 L 32 38"/>
+  </g>
+
+  <!-- Neural nodes (small dots at line intersections) -->
+  <g fill="#5EEAD4" opacity="0.85">
+    <circle cx="22" cy="26" r="1.6"/>
+    <circle cx="32" cy="27" r="1.9"/>
+    <circle cx="42" cy="26" r="1.6"/>
+    <circle cx="22" cy="38" r="1.6"/>
+    <circle cx="32" cy="38" r="1.9"/>
+    <circle cx="42" cy="38" r="1.6"/>
+  </g>
+
+  <!-- Brain silhouette: cleaner, more recognizable -->
   <path d="
-    M 32 13
-    C 24 13 17 17 14 23
-    C 11 25 11 30 14 32
-    C 12 34 12 37 14 38
-    C 13 40 13 42 15 43
-    C 16 47 20 50 25 50
-    L 25 51
-    C 25 52 26 53 27 53
-    L 37 53
-    C 38 53 39 52 39 51
-    L 39 50
-    C 44 50 48 47 49 43
-    C 51 42 51 40 50 38
-    C 52 37 52 34 50 32
-    C 53 30 53 25 50 23
-    C 47 17 40 13 32 13
+    M 32 14
+    C 25 14 19 18 17 24
+    C 14 25 13 28 14 31
+    C 12 32 12 35 14 36
+    C 13 38 14 40 16 41
+    C 17 45 21 48 25 48
+    L 25 49
+    C 25 50 26 51 27 51
+    L 37 51
+    C 38 51 39 50 39 49
+    L 39 48
+    C 43 48 47 45 48 41
+    C 50 40 51 38 50 36
+    C 52 35 52 32 50 31
+    C 51 28 50 25 47 24
+    C 45 18 39 14 32 14
     Z
-  " fill="url(#brainGrad)"/>
+  " fill="url(#brainGrad)" opacity="0.96"/>
 
-  <!-- Center division: subtle vertical line showing two hemispheres -->
-  <path d="M 32 14 L 32 50" stroke="#0F766E" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
+  <!-- Center division line (two hemispheres) -->
+  <path d="M 32 15 L 32 47" stroke="#0F766E" stroke-width="1.3" stroke-linecap="round" opacity="0.45"/>
 
-  <!-- Brain fold lines: visible at larger sizes, fades at 16x16 (which is fine) -->
+  <!-- Brain fold hints (subtle, fade at small sizes) -->
+  <g stroke="#0F766E" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.35">
+    <path d="M 23 21 Q 27 18 30 22"/>
+    <path d="M 34 22 Q 37 18 41 21"/>
+    <path d="M 21 30 Q 25 27 28 31"/>
+    <path d="M 36 31 Q 39 27 43 30"/>
+  </g>
+
+  <!-- Amber 4-pointed spark (Einstein 'aha!' moment) -->
   <path d="
-    M 22 22 Q 26 19 29 23
-    M 35 23 Q 38 19 42 22
-    M 20 30 Q 24 27 28 31
-    M 36 31 Q 40 27 44 30
-  " stroke="#0F766E" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.5"/>
-
-  <!-- Amber 4-pointed spark: Einstein's "aha!" moment -->
-  <path d="
-    M 52 9
-    L 54 14
-    L 59 16
-    L 54 18
-    L 52 23
-    L 50 18
-    L 45 16
-    L 50 14
+    M 50 8
+    L 52 14
+    L 58 16
+    L 52 18
+    L 50 24
+    L 48 18
+    L 42 16
+    L 48 14
     Z
   " fill="url(#sparkGrad)"/>
+
+  <!-- Tiny sparkle on the spark for extra polish -->
+  <circle cx="50" cy="16" r="1.2" fill="#FFFFFF" opacity="0.85"/>
 </svg>

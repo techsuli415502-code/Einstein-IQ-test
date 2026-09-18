@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <!-- Deep emerald gradient background -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0%" stop-color="#0F766E"/>
+      <stop offset="55%" stop-color="#0B5D57"/>
+      <stop offset="100%" stop-color="#083832"/>
+    </linearGradient>
+    <!-- Brain gradient -->
+    <linearGradient id="brainGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#D1FAE5"/>
+    </linearGradient>
+    <!-- Amber spark gradient -->
+    <radialGradient id="sparkGrad" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="45%" stop-color="#FCD34D"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </radialGradient>
+    <!-- Soft halo behind the brain -->
+    <radialGradient id="brainHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5EEAD4" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#5EEAD4" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#5EEAD4" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Outer ring (gauge-like) -->
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5EEAD4" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#5EEAD4" stop-opacity="0.15"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background: rounded square with deep emerald gradient -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+
+  <!-- Subtle top highlight -->
+  <rect x="4" y="4" width="504" height="504" rx="108" fill="none" stroke="white" stroke-opacity="0.1" stroke-width="2"/>
+
+  <!-- Outer gauge ring (instrument-like precision) -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="url(#ringGrad)" stroke-width="2"/>
+
+  <!-- Gauge tick marks (every 10 degrees, longer at cardinal points) -->
+  <g stroke="#5EEAD4" stroke-opacity="0.35" stroke-linecap="round">
+    <!-- 36 tick marks around the circle -->
+    <g transform="translate(256 256)">
+      <!-- Generated tick marks -->
+      <line x1="0" y1="-190" x2="0" y2="-180" stroke-width="2.5"/>
+      <line x1="0" y1="190" x2="0" y2="180" stroke-width="2.5"/>
+      <line x1="-190" y1="0" x2="-180" y2="0" stroke-width="2.5"/>
+      <line x1="190" y1="0" x2="180" y2="0" stroke-width="2.5"/>
+    </g>
+  </g>
+
+  <!-- Soft halo behind the brain -->
+  <circle cx="256" cy="256" r="170" fill="url(#brainHalo)"/>
+
+  <!-- Neural connection lines -->
+  <g stroke="#5EEAD4" stroke-width="6" stroke-linecap="round" opacity="0.6" fill="none">
+    <path d="M 176 208 Q 216 184 256 216"/>
+    <path d="M 256 216 Q 296 184 336 208"/>
+    <path d="M 176 304 Q 216 280 256 304"/>
+    <path d="M 256 304 Q 296 280 336 304"/>
+    <path d="M 256 216 L 256 304"/>
+    <path d="M 176 208 L 176 304"/>
+    <path d="M 336 208 L 336 304"/>
+  </g>
+
+  <!-- Neural nodes -->
+  <g fill="#5EEAD4" opacity="0.9">
+    <circle cx="176" cy="208" r="11"/>
+    <circle cx="256" cy="216" r="14"/>
+    <circle cx="336" cy="208" r="11"/>
+    <circle cx="176" cy="304" r="11"/>
+    <circle cx="256" cy="304" r="14"/>
+    <circle cx="336" cy="304" r="11"/>
+  </g>
+
+  <!-- Brain silhouette -->
+  <path d="
+    M 256 112
+    C 200 112 152 144 136 192
+    C 112 200 104 224 112 248
+    C 96 256 96 280 112 288
+    C 104 304 112 320 128 328
+    C 136 360 168 384 200 384
+    L 200 392
+    C 200 400 208 408 216 408
+    L 296 408
+    C 304 408 312 400 312 392
+    L 312 384
+    C 344 384 376 360 384 328
+    C 400 320 408 304 400 288
+    C 416 280 416 256 400 248
+    C 408 224 400 200 376 192
+    C 360 144 312 112 256 112
+    Z
+  " fill="url(#brainGrad)" opacity="0.97"/>
+
+  <!-- Center division line (two hemispheres) -->
+  <path d="M 256 120 L 256 376" stroke="#0F766E" stroke-width="10" stroke-linecap="round" opacity="0.45"/>
+
+  <!-- Brain fold hints -->
+  <g stroke="#0F766E" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.35">
+    <path d="M 184 168 Q 216 144 240 176"/>
+    <path d="M 272 176 Q 296 144 328 168"/>
+    <path d="M 168 240 Q 200 216 224 248"/>
+    <path d="M 288 248 Q 312 216 344 240"/>
+  </g>
+
+  <!-- Amber 4-pointed spark (Einstein 'aha!' moment) -->
+  <path d="
+    M 400 64
+    L 416 112
+    L 464 128
+    L 416 144
+    L 400 192
+    L 384 144
+    L 336 128
+    L 384 112
+    Z
+  " fill="url(#sparkGrad)"/>
+
+  <!-- Tiny sparkle on the spark -->
+  <circle cx="400" cy="128" r="9" fill="#FFFFFF" opacity="0.9"/>
+</svg>
